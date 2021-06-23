@@ -2,7 +2,7 @@
 
 namespace Wimc.Models
 {
-    public class ResourceSku
+    public class ResourceSkuViewModel
     {
         public string Capacity { get; set;  }
 

@@ -22,7 +22,7 @@ namespace Wimc.Controllers
             var test = newResourceViewModel.Name;
             var fileContents = await ReadResourceJson(newResourceViewModel.ResourceFile).ConfigureAwait(false);
             var model = new ResourceDetailViewModel(newResourceViewModel.Name,
-                fileContents.DeserializeJson<IList<AzureResource>>());
+                fileContents.DeserializeJson<IList<AzureResourceViewModel>>());
             return View("Detail", model);
         }
 
