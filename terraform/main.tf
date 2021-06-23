@@ -53,41 +53,55 @@ resource "azuread_service_principal_password" "app-service-test" {
 # Create Key Vault
 
 resource "azurerm_key_vault" "winc-net-app-vault" {
-    name  = join("-", ["kv", var.namespace, var.environment])   
-    resource_group_name      = azurerm_resource_group.wimc-net-rg.name
-    location = azurerm_resource_group.wimc-net-rg.location
-    enabled_for_disk_encryption = false
+  name                        = join("-", ["kv", var.namespace, var.environment])
+  resource_group_name         = azurerm_resource_group.wimc-net-rg.name
+  location                    = azurerm_resource_group.wimc-net-rg.location
+  enabled_for_disk_encryption = false
+  tenant_id                   = var.azure-tenant-id
+
+  sku_name = "standard"
+
+  access_policy {
     tenant_id = var.azure-tenant-id
+    object_id = azuread_service_principal.winc-net-app.id
 
-    sku_name = "standard"
+    secret_permissions = [
+      "get",
+      "list"
+    ]
 
-    access_policy {
-        tenant_id = var.azure-tenant-id
-        object_id = azuread_service_principal.winc-net-app.id
+    key_permissions = [
+      "Get",
+      "List",
+      "WrapKey",
+      "UnwrapKey",
+      "Sign",
+      "Verify"
+    ]
+  }
 
-        secret_permissions = [
-            "get",
-            "list"
-        ]
-
-        key_permissions = [
-            "Get",
-            "List",
-            "WrapKey",
-            "UnwrapKey",
-            "Sign",
-            "Verify"
-        ]
-    }
-
-    tags = {
-        environment = var.environment
-    }
+  tags = {
+    environment = var.environment
+  }
 }
 
 
 # Create DAPI Key
 
 
-# Create the Azure Storage Account
+resource "azurerm_key_vault_key" "wimc-dapi" {
+  name         = "wimc-dapi"
+  key_vault_id = azurerm_key_vault.winc-net-app-vault.id
+  key_type     = "RSA"
+  key_size     = 4096
+  key_opts = [
+    "decrypt",
+    "encrypt",
+    "sign",
+    "unwrapKey",
+    "verify",
+    "wrapKey"
+  ]
+}
+
 
