@@ -1,0 +1,23 @@
+﻿@model ResourceDetailViewModel
+
+<h3>Detail Here</h3>
+<div class="card">
+    <div class="card-header">Resources for resource group @Html.DisplayFor(model => model.Name)</div>
+    <div class="card-body">
+        <div class="table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @Html.DisplayFor(model => model.Resources)
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

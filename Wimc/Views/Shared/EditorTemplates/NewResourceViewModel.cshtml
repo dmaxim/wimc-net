@@ -1,0 +1,11 @@
+﻿@model NewResourceViewModel
+
+<div class="form-group">
+    <label asp-for="Name"></label>
+    <input asp-for="Name" type=text/>
+</div>
+
+<div class="form-group">
+    <label asp-for="ResourceFile"></label>
+    <input asp-for="ResourceFile" type="file" accept=".json" placeholder="Select a Resource JSON file"/>
+</div>
