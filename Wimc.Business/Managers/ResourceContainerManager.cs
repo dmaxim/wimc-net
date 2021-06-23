@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Mx.Library.Serialization;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
 
@@ -25,5 +28,23 @@ namespace Wimc.Business.Managers
             return await _resourceContainerRepository
                 .FindSingleAsync(container => container.ResourceContainerId == resourceContainerId).ConfigureAwait(false);
         }
+
+        public async Task<ResourceContainer> Create(string name, string containerJson)
+        {
+            var newContainer = new ResourceContainer
+            {
+                ContainerName = name,
+                
+            };
+            
+            var azureResources = containerJson.DeserializeJson<IList<AzureResource>>();
+            newContainer.Resources = azureResources.Select(azureResource => new Resource(azureResource)).ToList();
+
+            _resourceContainerRepository.Insert(newContainer);
+            await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
+            return newContainer;
+        }
+        
+
     }
 }

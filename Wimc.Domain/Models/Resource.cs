@@ -1,7 +1,18 @@
+using Mx.Library.Serialization;
+
 namespace Wimc.Domain.Models
 {
     public class Resource
     {
+        public Resource() {}
+
+        public Resource(AzureResource azureResource)
+        {
+            ResourceName = azureResource.Name;
+            ResourceType = azureResource.Type;
+            CloudId = azureResource.Id;
+            ResourceDefinition = azureResource.ToJson();
+        }
         public int ResourceId { get; set; }
         
         public int ResourceContainerId { get; set; }

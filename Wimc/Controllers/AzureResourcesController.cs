@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mx.Library.Serialization;
 using Wimc.Business.Managers;
-using Wimc.Domain.Repositories;
 using Wimc.Models;
 
 namespace Wimc.Controllers
@@ -21,16 +18,23 @@ namespace Wimc.Controllers
             _resourceContainerManager = resourceContainerManager;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var resources = await _resourceContainerManager.GetAll().ConfigureAwait(false);
+            return View(new ResourceContainerIndexModel(resources));
+        }
+
+        public IActionResult Create()
         {
             return View();
         }
-
         public async Task<IActionResult> UploadJson(NewResourceViewModel newResourceViewModel)
         {
             var fileContents = await ReadResourceJson(newResourceViewModel.ResourceFile).ConfigureAwait(false);
-            var model = new ResourceDetailViewModel(newResourceViewModel.Name,
-                fileContents.DeserializeJson<IList<AzureResourceViewModel>>());
+
+            var newResourceContainer = await _resourceContainerManager.Create(newResourceViewModel.Name, fileContents);
+            
+            var model = new ResourceDetailViewModel(newResourceViewModel.Name, newResourceContainer.Resources);
             return View("Detail", model);
         }
 

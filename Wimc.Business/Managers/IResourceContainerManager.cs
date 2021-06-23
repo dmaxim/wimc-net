@@ -9,5 +9,7 @@ namespace Wimc.Business.Managers
         Task<IList<ResourceContainer>> GetAll();
 
         Task<ResourceContainer> Get(int resourceContainerId);
+
+        Task<ResourceContainer> Create(string name, string containerJson);
     }
 }

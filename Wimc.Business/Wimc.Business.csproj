@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Mx.Library\Mx.Library.csproj" />
       <ProjectReference Include="..\Wimc.Domain\Wimc.Domain.csproj" />
     </ItemGroup>
 
