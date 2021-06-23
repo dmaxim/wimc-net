@@ -18,6 +18,11 @@ namespace Wimc
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(configurationBuilder =>
+                {
+                    configurationBuilder.AddJsonFile("appsettings.json", false, reloadOnChange: true);
+                    configurationBuilder.AddJsonFile("appsettings.secrets.json", true, reloadOnChange: true);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

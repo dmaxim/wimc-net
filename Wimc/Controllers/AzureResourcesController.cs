@@ -28,8 +28,6 @@ namespace Wimc.Controllers
 
         public async Task<IActionResult> UploadJson(NewResourceViewModel newResourceViewModel)
         {
-            
-            var test = newResourceViewModel.Name;
             var fileContents = await ReadResourceJson(newResourceViewModel.ResourceFile).ConfigureAwait(false);
             var model = new ResourceDetailViewModel(newResourceViewModel.Name,
                 fileContents.DeserializeJson<IList<AzureResourceViewModel>>());

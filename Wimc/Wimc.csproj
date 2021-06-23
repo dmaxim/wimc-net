@@ -12,6 +12,7 @@
     <ProjectReference Include="..\Mx.Library\Mx.Library.csproj" />
     <ProjectReference Include="..\Wimc.Business\Wimc.Business.csproj" />
     <ProjectReference Include="..\Wimc.Domain\Wimc.Domain.csproj" />
+    <ProjectReference Include="..\Wimc.Infrastructure\Wimc.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
