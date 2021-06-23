@@ -355,3 +355,5 @@ MigrationBackup/
 # Configuration
 appsettings.secrets.json
 
+## Terraform
+**/.terraform/*
