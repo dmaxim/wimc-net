@@ -29,3 +29,8 @@ variable "application-storage-account" {
   type        = string
   description = "Azure Storage Account For appliation storage"
 }
+
+variable "azure-ad-app-url" {
+  type        = string
+  description = "App URL for Azure AD Application"
+}
