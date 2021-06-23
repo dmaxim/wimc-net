@@ -351,3 +351,7 @@ MigrationBackup/
 
 # IDEA
 .idea/
+
+# Configuration
+appsettings.secrets.json
+

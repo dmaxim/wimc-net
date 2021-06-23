@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Business", "Wimc.Busin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Domain", "Wimc.Domain\Wimc.Domain.csproj", "{89E372D6-F2EE-453A-8C2E-CC61FF21FE61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Infrastructure", "Wimc.Infrastructure\Wimc.Infrastructure.csproj", "{6C11FCC5-6215-4B36-9910-6A22EB2058EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{89E372D6-F2EE-453A-8C2E-CC61FF21FE61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89E372D6-F2EE-453A-8C2E-CC61FF21FE61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89E372D6-F2EE-453A-8C2E-CC61FF21FE61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C11FCC5-6215-4B36-9910-6A22EB2058EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C11FCC5-6215-4B36-9910-6A22EB2058EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C11FCC5-6215-4B36-9910-6A22EB2058EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C11FCC5-6215-4B36-9910-6A22EB2058EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

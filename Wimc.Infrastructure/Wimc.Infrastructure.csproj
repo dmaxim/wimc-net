@@ -1,13 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+
+
     <ItemGroup>
       <ProjectReference Include="..\Mx.EntityFramework.Contracts\Mx.EntityFramework.Contracts.csproj" />
       <ProjectReference Include="..\Mx.EntityFramework\Mx.EntityFramework.csproj" />
-      <ProjectReference Include="..\Mx.Library\Mx.Library.csproj" />
+      <ProjectReference Include="..\Wimc.Business\Wimc.Business.csproj" />
+      <ProjectReference Include="..\Wimc.Data\Wimc.Data.csproj" />
       <ProjectReference Include="..\Wimc.Domain\Wimc.Domain.csproj" />
     </ItemGroup>
 

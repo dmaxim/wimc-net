@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Mx.EntityFramework.Contracts;
+using Mx.Library.ExceptionHandling;
 
 namespace Mx.EntityFramework.Repositories
 {
@@ -26,17 +30,59 @@ namespace Mx.EntityFramework.Repositories
 		{
 			return Context.Set<TEntity>();
 		}
+        
 
+        public virtual void Reload(TEntity entity)
+        {
+            Context.Entry<TEntity>(entity).Reload();
+        }
 
-		public virtual void Reload(TEntity entity)
-		{
-			Context.Entry<TEntity>(entity).Reload();
-		}
+        public virtual TEntity FindSingle(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = FindBy(predicate).ToList();
 
-		public virtual IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
+            AssertSingle(entities);
+
+            return entities.FirstOrDefault();
+        }
+
+        public virtual async Task<TEntity> FindSingleAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = await FindByAsync(predicate);
+
+            AssertSingle(entities);
+
+            return entities.FirstOrDefault();
+        }
+
+        private void AssertSingle(IList<TEntity> entities)
+        {
+            if (entities.Count > 1)
+            {
+                throw new MxMultipleFoundException($"More than one {(typeof(TEntity).Name)} was found matching the filter criteria");
+            }
+
+        }
+
+        public virtual IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate)
 		{
 			return Context.Set<TEntity>().Where(predicate);
 		}
-	
+
+        public virtual async Task<IList<TEntity>> FindByAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Context.Set<TEntity>().Where(predicate).ToListAsync();
+        }
+
+
+        /// <summary>
+        /// Generates a comma separated string containing the query parameter names
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        protected string GenerateCommaSeparatedParameterNames(ICollection<SqlParameter> parameters)
+		{
+			return string.Join(",", parameters.Select(parameter => parameter.ParameterName).ToList());
+		}
 	}
 }

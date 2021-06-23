@@ -5,12 +5,22 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mx.Library.Serialization;
+using Wimc.Business.Managers;
+using Wimc.Domain.Repositories;
 using Wimc.Models;
 
 namespace Wimc.Controllers
 {
     public class AzureResourcesController : Controller
     {
+        private readonly IResourceContainerManager _resourceContainerManager;
+
+        public AzureResourcesController(IResourceContainerManager resourceContainerManager)
+        {
+            _resourceContainerManager = resourceContainerManager;
+        }
+        
         public IActionResult Index()
         {
             return View();

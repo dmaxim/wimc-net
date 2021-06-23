@@ -8,4 +8,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mx.Library\Mx.Library.csproj" />
+    <ProjectReference Include="..\Wimc.Business\Wimc.Business.csproj" />
+    <ProjectReference Include="..\Wimc.Domain\Wimc.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

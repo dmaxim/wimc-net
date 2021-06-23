@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mx.EntityFramework.Contracts\Mx.EntityFramework.Contracts.csproj" />
+    <ProjectReference Include="..\Mx.Library\Mx.Library.csproj" />
   </ItemGroup>
 
 </Project>
