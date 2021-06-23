@@ -44,7 +44,10 @@ namespace Wimc.Business.Managers
             await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
             return newContainer;
         }
-        
 
+        public async Task<ResourceContainer> GetById(int resourceContainerId)
+        {
+            return await _resourceContainerRepository.Get(resourceContainerId).ConfigureAwait(false);
+        }
     }
 }

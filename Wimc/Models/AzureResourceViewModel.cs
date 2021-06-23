@@ -11,6 +11,7 @@ namespace Wimc.Models
             Id = resource.CloudId;
             Name = resource.ResourceName;
             Type = resource.ResourceType;
+            Location = resource.ResourceLocation;
         }
         public string Id { get; set; }
         public string Location { get; set; }

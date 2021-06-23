@@ -12,6 +12,7 @@ namespace Wimc.Domain.Models
             ResourceType = azureResource.Type;
             CloudId = azureResource.Id;
             ResourceDefinition = azureResource.ToJson();
+            ResourceLocation = azureResource.Location;
         }
         public int ResourceId { get; set; }
         
@@ -23,6 +24,7 @@ namespace Wimc.Domain.Models
         
         public string CloudId { get; set; }
         
+        public string ResourceLocation { get; set; }
         public string ResourceDefinition { get; set; }
         
     }

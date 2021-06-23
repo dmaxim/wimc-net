@@ -38,7 +38,14 @@ namespace Wimc.Controllers
             return View("Detail", model);
         }
 
+        public async Task<IActionResult> Detail(int id)
+        {
+            var resourceContainer = await _resourceContainerManager.GetById(id);
 
+            return View("Detail",
+                new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.Resources));
+        }
+        
         private async Task<string> ReadResourceJson(IFormFile formFile)
         {
             using var reader = new StreamReader(formFile.OpenReadStream());

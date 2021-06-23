@@ -65,7 +65,9 @@ namespace Wimc.Data.Contexts
                 .Property(properties => properties.ResourceDefinition)
                 .IsUnicode(false);
 
-          
+            modelBuilder.Entity<Resource>()
+                .Property(properties => properties.ResourceLocation)
+                .IsUnicode(false);
         }
     }
 }
