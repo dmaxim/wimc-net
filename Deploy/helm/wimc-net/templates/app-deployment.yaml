@@ -27,7 +27,7 @@ spec:
       serviceAccountName: {{.Release.Name}}
       containers:
       - name: api
-        image: {{.Values.image.repository}}:{{.Values.image.tag}}
+        image: {{.Values.appImage.repository}}:{{.Values.appImage.tag}}
         imagePullPolicy: {{.Values.appImage.pullPolicy}}
         ports:
         - containerPort: 80
