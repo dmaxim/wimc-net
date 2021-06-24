@@ -59,6 +59,11 @@ namespace Wimc
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseCookiePolicy(new CookiePolicyOptions{ 
+                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax, 
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.None,
+                Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.None
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -74,9 +79,13 @@ namespace Wimc
                 {
                     authOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     authOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    
+                    
                 })
                 .AddAzureAd(options => Configuration.Bind("AzureAd", options))
-                .AddCookie();
+                .AddCookie(options => {
+                
+                });
         }
         
         private void AddDataProtection(IServiceCollection services)

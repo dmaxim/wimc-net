@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wimc-net
+spec:
+  selector:
+    app: wimc
+  ports:
+   - protocol: TCP
+     port: 80
+     targetPort: 80
+  sessionAffinity: None
+  type: ClusterIP
+
