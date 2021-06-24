@@ -1,0 +1,19 @@
+# Secret provider
+apiVersion: secrets-store.csi.x-k8s.io/v1alpha1
+kind: SecretProviderClass
+metadata:
+  name: wimc-vault
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "true"
+    useVMManagedIdentity: "false"
+    userAssignedIdentityID: ""
+    keyvaultName: "kv-mxinfo-wimc-net-dev"
+    tenantId: 38ec304a-0fad-408b-b7cd-e04a2e25b885
+    objects: |
+      array:
+       - |
+         objectName: "appsettings"
+         objecAlias: "appsettings.secrets.json"
+         objectType: secret
