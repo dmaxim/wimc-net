@@ -6,7 +6,7 @@ pool:
   name: DevOpsLocal
 
 variables:
-  imageName: 'mxinfo.acr.io/wimc-net'
+  imageName: 'mxinfo.azurecr.io/wimc-net'
   tag: '$(build.buildId)'
   lowMediumResults: 'trivy-report-low-med.xml'
   highCritResults: 'trivy-report-high-crit.xml'
