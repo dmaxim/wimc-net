@@ -1,0 +1,62 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: {{.Release.Namespace}}
+  name: {{.Release.Name}}-db
+  labels:
+    app: {{.Values.applicationName}}-db
+    environment: {{.Values.applicationEnvironment}}
+spec:
+  serviceName: {{.Release.Name}}-headless
+  replicas: {{.Values.replicaCount}}
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: {{.Values.applicationName}}-db
+  template:
+    metadata:
+      name: {{.Release.Name}}-db
+      labels:
+        app: {{.Values.applicationName}}-db
+        environment: {{.Values.applicationEnvironment}}
+    spec:
+      serviceAccountName: {{.Release.Name}}-db
+      containers:
+      - name: db
+        image:  {{.Values.dbImage.repository}}:{{.Values.dbImage.tag}}
+        ports:
+        - containerPort: 80
+          name: api-http
+        imagePullPolicy: {{.Values.dbImage.pullPolicy}}
+        {{- if .Values.dbresources}}
+        {{- with .Values.dbresources}}
+        resources:
+          limits: 
+            cpu: {{.limits.cpu}}
+            memory: {{.limits.memory}}
+          requests:
+            cpu: {{.requests.cpu}}
+            memory: {{.requests.memory}}
+        {{- end}}
+        {{- end}}
+        volumeMounts:
+        - name: datadir
+          mountPath: /app/data
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: datadir
+        persistentVolumeClaim:
+          claimName: datadir
+  volumeClaimTemplates:
+    - metadata:
+        name: datadir
+      spec:
+        accessModes:
+         - ReadWriteOnce
+        resources:
+          requests:
+            storage: "2Gi"
+        storageClassName: {{.Values.storageClass}}
