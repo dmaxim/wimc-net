@@ -45,13 +45,13 @@ spec:
         volumeMounts:
         - name: datadir
           mountPath: /app/data
+      imagePullSecrets:
+       - name: mxinfo-acr
       terminationGracePeriodSeconds: 30
       volumes:
       - name: datadir
         persistentVolumeClaim:
           claimName: datadir
-      imagePullSecrets:
-        - name: mxinfo-acr
   volumeClaimTemplates:
     - metadata:
         name: datadir
