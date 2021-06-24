@@ -1,4 +1,7 @@
+using System;
+using Azure.Identity;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +24,7 @@ namespace Wimc
         {
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
+            AddDataProtection(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,5 +51,16 @@ namespace Wimc
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        private void AddDataProtection(IServiceCollection services)
+        {
+            var azureStorageConnectionString = Configuration["AzureStorage:ConnectionString"];
+            var keyVaultUri = Configuration["DataProtection:KeyIdentifier"];
+            services.AddDataProtection()
+                .PersistKeysToAzureBlobStorage(azureStorageConnectionString, "dapi", "wimcnet")
+                .ProtectKeysWithAzureKeyVault(new Uri(keyVaultUri), new DefaultAzureCredential());
+
+        }
+        
     }
 }
