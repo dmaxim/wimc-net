@@ -1,0 +1,24 @@
+
+applicationEnvironment: "wimc-dev"
+applicationName: "wimc"
+
+# Deployment
+replicaCount: 3
+
+appImage: 
+  repository: mxinfo.azurecr.io/wimc-net
+  pullPolicy: "IfNotPresent"
+  tag: "204"
+
+dbImage: 
+  repository: mxinfo.azurecr.io/wimc.database
+  pullPolicy: "IfNotPresent"
+  tag: "v0.4"
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 300Mi
+  limits:
+    cpu: 200m
+    memory: 300Mi
