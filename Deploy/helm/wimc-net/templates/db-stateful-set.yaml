@@ -9,7 +9,7 @@ metadata:
     environment: {{.Values.applicationEnvironment}}
 spec:
   serviceName: {{.Release.Name}}-headless
-  replicas: {{.Values.replicaCount}}
+  replicas: 1
   podManagementPolicy: OrderedReady
   updateStrategy:
     type: RollingUpdate
