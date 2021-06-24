@@ -50,6 +50,8 @@ spec:
       - name: datadir
         persistentVolumeClaim:
           claimName: datadir
+      imagePullSecrets:
+        - name: mxinfo-acr
   volumeClaimTemplates:
     - metadata:
         name: datadir

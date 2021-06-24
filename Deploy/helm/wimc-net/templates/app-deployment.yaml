@@ -53,3 +53,5 @@ spec:
         - name: secrets-config
           secret:
             secretName: wimc-settings
+      imagePullSecrets:
+        - name: mxinfo-acr
