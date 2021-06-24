@@ -1,11 +1,17 @@
 using System;
 using Azure.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Wimc.Infrastructure;
 using Wimc.Infrastructure.DI;
 
 namespace Wimc
@@ -22,6 +28,15 @@ namespace Wimc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureAuthentication(services);
+            services.AddAuthorization(config =>
+            {
+                var authenticationPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                config.DefaultPolicy = authenticationPolicy;
+            });
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
             AddDataProtection(services);
@@ -42,6 +57,7 @@ namespace Wimc
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -52,6 +68,17 @@ namespace Wimc
             });
         }
 
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            services.AddAuthentication(authOptions =>
+                {
+                    authOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    authOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                })
+                .AddAzureAd(options => Configuration.Bind("AzureAd", options))
+                .AddCookie();
+        }
+        
         private void AddDataProtection(IServiceCollection services)
         {
             var azureStorageConnectionString = Configuration["AzureStorage:ConnectionString"];

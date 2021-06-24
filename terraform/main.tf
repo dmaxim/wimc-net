@@ -30,11 +30,16 @@ resource "azurerm_storage_container" "wimc-dapi-container" {
 
 resource "azuread_application" "winc-net-app" {
   display_name               = join("-", [var.namespace, var.environment])
-  homepage                   = var.azure-ad-app-url
-  reply_urls                 = [var.azure-ad-app-url]
-  oauth2_allow_implicit_flow = true
-  type                       = "webapp/api"
   group_membership_claims    = "All"
+
+  web {
+    homepage_url = var.azure-ad-app-url
+    redirect_uris = [var.azure-ad-app-url]
+
+    implicit_grant {
+      access_token_issuance_enabled = true
+    }
+  }
 }
 
 

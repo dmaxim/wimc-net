@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Mx.Library.Serialization;
 using Wimc.Business.Managers;
 using Wimc.Models;
 
 namespace Wimc.Controllers
 {
+    [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class AzureResourcesController : Controller
     {
         private readonly IResourceContainerManager _resourceContainerManager;
