@@ -29,11 +29,11 @@ resource "azurerm_storage_container" "wimc-dapi-container" {
 # Create Azure AD App Registration for the application
 
 resource "azuread_application" "winc-net-app" {
-  display_name               = join("-", [var.namespace, var.environment])
-  group_membership_claims    = "All"
+  display_name            = join("-", [var.namespace, var.environment])
+  group_membership_claims = "All"
 
   web {
-    homepage_url = var.azure-ad-app-url
+    homepage_url  = var.azure-ad-app-url
     redirect_uris = [var.azure-ad-app-url]
 
     implicit_grant {
