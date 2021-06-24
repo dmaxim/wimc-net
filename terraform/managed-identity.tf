@@ -22,13 +22,14 @@ data "azurerm_subscription" "primary" {
 
 }
 
-
+/*
 
 resource "azurerm_role_assignment" "app-identity-role" {
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = "Managed Identity Operator"
   principal_id         = azurerm_user_assigned_identity.app-identity.principal_id
 }
+*/
 
 
 
