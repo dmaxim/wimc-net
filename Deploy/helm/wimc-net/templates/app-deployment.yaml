@@ -50,6 +50,6 @@ spec:
            mountPath: /app/appsettings.secrets.json
            subPath: "appsettings.secrets.json"
       volumes:
-        - name: wimc-config
+        - name: secrets-config
           secret:
             secretName: wimc-settings
