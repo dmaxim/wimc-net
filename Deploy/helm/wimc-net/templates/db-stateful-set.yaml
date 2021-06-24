@@ -46,7 +46,7 @@ spec:
         - name: datadir
           mountPath: /app/data
       imagePullSecrets:
-       - name: mxinfo-acr
+       - name: mxinfo-acr-dv
       terminationGracePeriodSeconds: 30
       volumes:
       - name: datadir
