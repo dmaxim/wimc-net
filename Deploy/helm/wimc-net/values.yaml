@@ -22,3 +22,11 @@ resources:
   limits:
     cpu: 200m
     memory: 300Mi
+
+dbresources:
+  requests:
+    cpu: 400m
+    memory: 2000Mi
+  limits:
+    cpu: 400m
+    memory: 2000Mi
