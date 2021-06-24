@@ -1,0 +1,16 @@
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentity
+metadata:
+    name: demo-id
+spec:
+  type: 0
+  ResourceId: /subscriptions/bb0c99b7-d44d-413a-b294-564466712637/resourceGroups/rg-mxinfo-wimc-net-dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-mxinfo-wimc-net-dev
+  ClientID: 4ea83a06-0e6a-4b34-bdb0-e03d7a720bec
+---
+apiVersion: aadpodidentity.k8s.io/v1
+kind: AzureIdentityBinding
+metadata:
+  name: demo-id-idenity-binding
+spec:
+  AzureIdentity: demo-id
+  Selector: demo-id
