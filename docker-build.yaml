@@ -6,7 +6,7 @@ pool:
   name: DevOpsLocal
 
 variables:
-  imageName: 'mxinfo.acr.io/wimc-net'
+  imageName: 'mxinfo.azurecr.io/wimc-net'
   tag: '$(build.buildId)'
   lowMediumResults: 'trivy-report-low-med.xml'
   highCritResults: 'trivy-report-high-crit.xml'
@@ -67,6 +67,14 @@ steps:
     testRunTitle: 'OWASP Dep Check'
   condition: 'always()'
 
+- task: Docker@2
+  displayName: "Push Docker Image"
+  inputs:
+    containerRegistry: 'mxinfo-containers'
+    repository: 'wimc-net'
+    command: 'push'
+    container: $(imageName):$(tag)
+    
 - task: Docker@2
   displayName: "Remove Docker Image"
   inputs: 
