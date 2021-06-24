@@ -39,7 +39,7 @@ namespace Wimc
             });
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
-            AddDataProtection(services);
+            //AddDataProtection(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
