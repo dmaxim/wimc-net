@@ -19,6 +19,13 @@ resource "azurerm_storage_account" "wimc-net-storage" {
   }
 }
 
+# Create storage container
+resource "azurerm_storage_container" "wimc-dapi-container" {
+  name                  = "dapi"
+  storage_account_name  = azurerm_storage_account.wimc-net-storage.name
+  container_access_type = "private"
+}
+
 # Create Azure AD App Registration for the application
 
 resource "azuread_application" "winc-net-app" {
@@ -87,7 +94,7 @@ resource "azurerm_key_vault" "winc-net-app-vault" {
 
 
 # Create DAPI Key
-
+/*
 
 resource "azurerm_key_vault_key" "wimc-dapi" {
   name         = "wimc-dapi"
@@ -105,3 +112,4 @@ resource "azurerm_key_vault_key" "wimc-dapi" {
 }
 
 
+*/
