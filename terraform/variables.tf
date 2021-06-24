@@ -34,3 +34,8 @@ variable "azure-ad-app-url" {
   type        = string
   description = "App URL for Azure AD Application"
 }
+
+variable "managed-identity-object-id" {
+  type        = string
+  description = "Object id of the managed identity for the application"
+}
