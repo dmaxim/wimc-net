@@ -28,7 +28,9 @@ namespace Wimc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          /*
             ConfigureAuthentication(services);
+          
             services.AddAuthorization(config =>
             {
                 var authenticationPolicy = new AuthorizationPolicyBuilder()
@@ -37,6 +39,7 @@ namespace Wimc
 
                 config.DefaultPolicy = authenticationPolicy;
             });
+            */
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
             //AddDataProtection(services);
@@ -57,6 +60,7 @@ namespace Wimc
 
             app.UseRouting();
 
+            /*
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseCookiePolicy(new CookiePolicyOptions{ 
@@ -64,7 +68,7 @@ namespace Wimc
                 HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.None,
                 Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.None
             });
-
+            */
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
