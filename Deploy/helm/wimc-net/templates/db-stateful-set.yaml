@@ -44,7 +44,7 @@ spec:
         {{- end}}
         volumeMounts:
         - name: datadir
-          mountPath: /app/data
+          mountPath: /var/opt/mssql/data
       imagePullSecrets:
        - name: mxinfo-acr-dv
       terminationGracePeriodSeconds: 30
