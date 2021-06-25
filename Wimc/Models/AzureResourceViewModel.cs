@@ -6,6 +6,7 @@ namespace Wimc.Models
 {
     public class AzureResourceViewModel
     {
+        public AzureResourceViewModel() {}
         public AzureResourceViewModel(Resource resource)
         {
             ResourceId = resource.ResourceId;
