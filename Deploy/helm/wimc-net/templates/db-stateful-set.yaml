@@ -1,64 +1,49 @@
 
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  namespace: {{.Release.Namespace}}
   name: {{.Release.Name}}-db
+  namespace: {{.Release.Namespace}}
   labels:
-    app: {{.Values.applicationName}}-db
     environment: {{.Values.applicationEnvironment}}
+    app: {{.Values.applicationName}}-db
 spec:
-  serviceName: {{.Release.Name}}-headless
+  minReadySeconds: 10
   replicas: 1
-  podManagementPolicy: OrderedReady
-  updateStrategy:
-    type: RollingUpdate
   selector:
-    matchLabels:
+    matchLabels: 
       app: {{.Values.applicationName}}-db
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
-      name: {{.Release.Name}}-db
       labels:
-        app: {{.Values.applicationName}}-db
         environment: {{.Values.applicationEnvironment}}
+        app: {{.Values.applicationName}}-db
     spec:
       serviceAccountName: {{.Release.Name}}-db
       containers:
-      - name: db
-        image:  {{.Values.dbImage.repository}}:{{.Values.dbImage.tag}}
+      - name: api
+        image: {{.Values.dbImage.repository}}:{{.Values.dbImage.tag}}
+        imagePullPolicy: {{.Values.dbImage.pullPolicy}}
         ports:
         - containerPort: 80
-          name: api-http
-        imagePullPolicy: {{.Values.dbImage.pullPolicy}}
+          protocol: TCP
         {{- if .Values.dbresources}}
         {{- with .Values.dbresources}}
         resources:
-          limits: 
-            cpu: {{.limits.cpu}}
-            memory: {{.limits.memory}}
           requests:
+            memory: {{.requests.memory}} 
             cpu: {{.requests.cpu}}
-            memory: {{.requests.memory}}
+          limits:
+            memory: {{.limits.memory}}
+            cpu: {{.limits.cpu}}
         {{- end}}
         {{- end}}
-      #  volumeMounts:
-      #  - name: datadir
-      #    mountPath: /var/opt/mssql
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
       imagePullSecrets:
-       - name: mxinfo-acr-dv
-      terminationGracePeriodSeconds: 30
-      #volumes:
-      #- name: datadir
-       # persistentVolumeClaim:
-        #  claimName: datadir
-  #volumeClaimTemplates:
-   # - metadata:
-    #    name: datadir
-    #  spec:
-     #   accessModes:
-      #   - ReadWriteOnce
-      #  resources:
-       #   requests:
-        #    storage: "2Gi"
-        #storageClassName: {{.Values.storageClass}}
+        - name: mxinfo-acr-dv
