@@ -47,6 +47,28 @@ resource "azuread_service_principal" "winc-net-app" {
   application_id = azuread_application.winc-net-app.application_id
 }
 
+
+# Create Azure AD App Registration for Kibana
+
+resource "azuread_application" "kibana-app" {
+  display_name            = "mxinfo-kibana"
+  group_membership_claims = "All"
+
+  web {
+    homepage_url  = "https://mxinfo-kibana.danmaxim.net"
+    redirect_uris = ["https://mxinfo-kibana.danmaxim.net/oauth2/callback"]
+
+    implicit_grant {
+      access_token_issuance_enabled = true
+    }
+  }
+}
+
+
+resource "azuread_service_principal" "kibana-app" {
+  application_id = azuread_application.kibana-app.application_id
+}
+
 /*
 resource "azuread_application_password" "app-service-test" {
     application_object_id   = azuread_application.app-service-test.id
