@@ -34,7 +34,7 @@ resource "azuread_application" "winc-net-app" {
 
   web {
     homepage_url  = var.azure-ad-app-url
-    redirect_uris = [var.azure-ad-app-url]
+    redirect_uris = [var.azure-ad-app-url, "https://wimc.danmaxim.net/oauth2/callback", "https://wimc.danmaxim.net/signin-oidc"]
 
     implicit_grant {
       access_token_issuance_enabled = true
