@@ -24,6 +24,10 @@ data "azurerm_subscription" "primary" {
 
 /*
 
+The SP for Terraform does not have permission to add the role - need to determine how to grant this permission
+az identity list --resource-group rg-mxinfo-wimc-net-dev
+az role assignment create --role "Managed Identity Operator" --assignee 4ea83a06-0e6a-4b34-bdb0-e03d7a720bec --scope /subscriptions/bb0c99b7-d44d-413a-b294-564466712637/resourcegroups/rg-mxinfo-wimc-net-dev/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-mxinfo-wimc-net-dev
+manually added via 
 resource "azurerm_role_assignment" "app-identity-role" {
   scope                = data.azurerm_subscription.primary.id
   role_definition_name = "Managed Identity Operator"
