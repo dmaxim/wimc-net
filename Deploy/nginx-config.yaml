@@ -17,3 +17,5 @@ metadata:
 data:
   proxy-buffer-size: "8k"
   proxy-body-size: "25M"
+
+

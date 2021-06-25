@@ -42,23 +42,23 @@ spec:
             memory: {{.requests.memory}}
         {{- end}}
         {{- end}}
-        volumeMounts:
-        - name: datadir
-          mountPath: /var/opt/mssql/data
+        #volumeMounts:
+        #- name: datadir
+        #  mountPath: /var/opt/mssql/data
       imagePullSecrets:
        - name: mxinfo-acr-dv
       terminationGracePeriodSeconds: 30
-      volumes:
-      - name: datadir
-        persistentVolumeClaim:
-          claimName: datadir
-  volumeClaimTemplates:
-    - metadata:
-        name: datadir
-      spec:
-        accessModes:
-         - ReadWriteOnce
-        resources:
-          requests:
-            storage: "2Gi"
-        storageClassName: {{.Values.storageClass}}
+      #volumes:
+      #- name: datadir
+       # persistentVolumeClaim:
+        #  claimName: datadir
+  #volumeClaimTemplates:
+   # - metadata:
+    #    name: datadir
+     # spec:
+      #  accessModes:
+       #  - ReadWriteOnce
+       # resources:
+       #   requests:
+        #    storage: "2Gi"
+       # storageClassName: {{.Values.storageClass}}
