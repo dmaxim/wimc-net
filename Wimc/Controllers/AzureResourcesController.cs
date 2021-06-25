@@ -8,7 +8,7 @@ using Wimc.Models;
 
 namespace Wimc.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [AutoValidateAntiforgeryToken]
     public class AzureResourcesController : Controller
     {

@@ -28,7 +28,9 @@ namespace Wimc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+          /*
             ConfigureAuthentication(services);
+          
             services.AddAuthorization(config =>
             {
                 var authenticationPolicy = new AuthorizationPolicyBuilder()
@@ -37,6 +39,7 @@ namespace Wimc
 
                 config.DefaultPolicy = authenticationPolicy;
             });
+            */
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
             //AddDataProtection(services);
@@ -57,9 +60,15 @@ namespace Wimc
 
             app.UseRouting();
 
+            /*
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCookiePolicy(new CookiePolicyOptions{ 
+                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax, 
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.None,
+                Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.None
+            });
+            */
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -74,9 +83,13 @@ namespace Wimc
                 {
                     authOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                     authOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    
+                    
                 })
                 .AddAzureAd(options => Configuration.Bind("AzureAd", options))
-                .AddCookie();
+                .AddCookie(options => {
+                
+                });
         }
         
         private void AddDataProtection(IServiceCollection services)
