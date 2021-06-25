@@ -13,6 +13,7 @@ namespace Wimc.Domain.Models
             CloudId = azureResource.Id;
             ResourceDefinition = azureResource.ToJson();
             ResourceLocation = azureResource.Location;
+            IsMigrated = false;
         }
         public int ResourceId { get; set; }
         
@@ -26,6 +27,7 @@ namespace Wimc.Domain.Models
         
         public string ResourceLocation { get; set; }
         public string ResourceDefinition { get; set; }
-        
+         
+        public bool IsMigrated { get; set; }
     }
 }

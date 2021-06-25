@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Wimc.Business.Managers;
@@ -8,15 +7,16 @@ using Wimc.Models;
 
 namespace Wimc.Controllers
 {
-    //[Authorize]
     [AutoValidateAntiforgeryToken]
     public class AzureResourcesController : Controller
     {
         private readonly IResourceContainerManager _resourceContainerManager;
+        private readonly IResourceManager _resourceManager;
 
-        public AzureResourcesController(IResourceContainerManager resourceContainerManager)
+        public AzureResourcesController(IResourceContainerManager resourceContainerManager, IResourceManager resourceManager)
         {
             _resourceContainerManager = resourceContainerManager;
+            _resourceManager = resourceManager;
         }
         
         public async Task<IActionResult> Index()
@@ -53,5 +53,22 @@ namespace Wimc.Controllers
             var contents = await reader.ReadToEndAsync().ConfigureAwait(false);
             return contents;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Migrate(int id)
+        {
+            var resource = await _resourceManager.Get(id).ConfigureAwait(false);
+
+            return View(new AzureResourceViewModel(resource));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Migrate(AzureResourceViewModel model)
+        {
+            await _resourceManager.Migrate(model.ResourceId);
+            return RedirectToAction("Detail", new {id = model.Id});
+        }
+        
     }
 }

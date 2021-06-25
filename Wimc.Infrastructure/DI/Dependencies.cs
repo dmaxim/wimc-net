@@ -33,6 +33,7 @@ namespace Wimc.Infrastructure.DI
             services.AddTransient<IResourceContainerRepository, ResourceContainerRepository>();
             services.AddTransient<IResourceRepository, ResourceRepository>();
             services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
+            services.AddTransient<IResourceManager, ResourceManager>();
 
             return services;
         }
