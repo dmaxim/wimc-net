@@ -24,7 +24,7 @@ spec:
         environment: {{.Values.applicationEnvironment}}
         app: {{.Values.applicationName}}-db
     spec:
-      terminattionGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: 30
       hostname: mssqlinst
       securityContext:
         fsGroup: 10001
