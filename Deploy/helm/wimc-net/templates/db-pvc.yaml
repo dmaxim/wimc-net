@@ -2,7 +2,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: wimc-db-data
-  annotations: volume.beta.kubernetes.io/storage-class: azure-disk
+  annotations: 
+    volume.beta.kubernetes.io/storage-class: azure-disk
   namespace: dev
 spec:
   accessModes:
