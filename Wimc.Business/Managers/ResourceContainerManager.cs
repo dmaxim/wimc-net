@@ -58,5 +58,16 @@ namespace Wimc.Business.Managers
 
             await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
         }
+
+        public async Task Delete(int resourceContainerId)
+        {
+            var container = await _resourceContainerRepository.Get(resourceContainerId).ConfigureAwait(false);
+
+            if (container != null)
+            {
+                _resourceContainerRepository.Delete(container);
+                await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
+            }
+        }
     }
 }

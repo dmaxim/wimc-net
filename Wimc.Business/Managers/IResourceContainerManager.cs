@@ -15,5 +15,7 @@ namespace Wimc.Business.Managers
         Task<ResourceContainer> GetById(int resourceContainerId);
         
         Task Edit(EditResourceContainer editResourceContainer);
+
+        Task Delete(int resourceContainerId);
     }
 }

@@ -84,5 +84,19 @@ namespace Wimc.Controllers
             await _resourceContainerManager.Edit(new EditResourceContainer(model.ResourceContainerId, model.Name)).ConfigureAwait(false);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new DeleteResourceContainerViewModel {ResourceContainerId = id});
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> ConfirmDelete(DeleteResourceContainerViewModel model)
+        {
+            await _resourceContainerManager.Delete(model.ResourceContainerId).ConfigureAwait(false);
+
+            return RedirectToAction("Index");
+        }
     }
 }

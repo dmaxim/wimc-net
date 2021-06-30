@@ -1,0 +1,8 @@
+@model DeleteResourceContainerViewModel
+
+<div class="card-body">
+    <form asp-action="ConfirmDelete" asp-controller="AzureResources">
+        <input type="hidden" asp-for="ResourceContainerId" />
+        <input type="submit" value="Delete">
+    </form>
+</div>
