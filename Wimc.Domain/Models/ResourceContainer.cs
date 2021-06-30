@@ -10,7 +10,7 @@ namespace Wimc.Domain.Models
 
         public ICollection<Resource> Resources { get; set; }
         
-        //public string ResourceJson { get; set; }
+        public string RawJson { get; set; }
         
     }
 }

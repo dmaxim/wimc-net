@@ -33,12 +33,13 @@ namespace Wimc.Business.Managers
             var newContainer = new ResourceContainer
             {
                 ContainerName = name,
+                RawJson =  containerJson
                 
             };
             
             var azureResources = containerJson.DeserializeJson<IList<AzureResource>>();
             newContainer.Resources = azureResources.Select(azureResource => new Resource(azureResource)).ToList();
-
+            
             _resourceContainerRepository.Insert(newContainer);
             await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
             return newContainer;

@@ -16,10 +16,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @Html.DisplayFor(model => model.Resources)
+                @Html.DisplayFor(model => model.Resources)
                 </tbody>
             </table>
         </div>
 
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Raw</div>
+    <div class="card-body">
+        <pre>
+            @Html.DisplayFor(model=>model.Json)
+        </pre>
     </div>
 </div>

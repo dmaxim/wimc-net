@@ -36,7 +36,7 @@ namespace Wimc.Controllers
 
             var newResourceContainer = await _resourceContainerManager.Create(newResourceViewModel.Name, fileContents);
             
-            var model = new ResourceDetailViewModel(newResourceViewModel.Name, newResourceContainer.Resources);
+            var model = new ResourceDetailViewModel(newResourceViewModel.Name, fileContents, newResourceContainer.Resources);
             return View("Detail", model);
         }
 
@@ -45,7 +45,7 @@ namespace Wimc.Controllers
             var resourceContainer = await _resourceContainerManager.GetById(id);
 
             return View("Detail",
-                new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.Resources));
+                new ResourceDetailViewModel(resourceContainer.ContainerName,  resourceContainer.RawJson, resourceContainer.Resources));
         }
         
         private async Task<string> ReadResourceJson(IFormFile formFile)

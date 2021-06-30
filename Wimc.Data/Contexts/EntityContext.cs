@@ -52,6 +52,10 @@ namespace Wimc.Data.Contexts
                 .Property(properties => properties.ContainerName)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<ResourceContainer>()
+                .Property(properties => properties.RawJson)
+                .IsUnicode(false);
+            
             modelBuilder.Entity<Resource>()
                 .ToTable("Resource", DefaultSchema)
                 .Property(properties => properties.ResourceName)

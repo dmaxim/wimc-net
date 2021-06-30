@@ -1,3 +1,4 @@
+@using Mx.Library.Serialization
 @model AzureResourceViewModel
 
 <form asp-action="Migrate" asp-controller="AzureResources">
@@ -23,7 +24,9 @@
         <div class="card-body">
             <div class="form-group">
                 <label asp-for="Definition"></label>
-                <textarea asp-for="Definition" class="form-control" rows="10"></textarea>
+                <pre>
+                    @Html.Raw(Newtonsoft.Json.Linq.JToken.Parse(@Model.Definition).ToString(Newtonsoft.Json.Formatting.Indented))
+                </pre>
             </div>
             
         </div>
