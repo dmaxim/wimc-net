@@ -3,5 +3,8 @@
 
 <tr>
     <td>@Html.DisplayFor(model => model.ContainerName)</td>
-    <td><a asp-action="Detail" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" class="btn btn-primary">Detail</a></td>
+    <td>
+        <a asp-action="Detail" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" class="btn btn-primary">Detail</a>
+        <a asp-action="Edit" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" class="btn btn-secondary">Edit</a>
+    </td>
 </tr>

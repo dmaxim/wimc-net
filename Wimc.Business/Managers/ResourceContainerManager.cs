@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +47,16 @@ namespace Wimc.Business.Managers
         public async Task<ResourceContainer> GetById(int resourceContainerId)
         {
             return await _resourceContainerRepository.Get(resourceContainerId).ConfigureAwait(false);
+        }
+
+        public async Task Edit(EditResourceContainer editResourceContainer)
+        {
+            var container = await _resourceContainerRepository.Get(editResourceContainer.ResourceContainerId)
+                .ConfigureAwait(false);
+
+            container.ContainerName = editResourceContainer.ResourceContainerName;
+
+            await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

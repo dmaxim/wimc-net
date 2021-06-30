@@ -13,5 +13,7 @@ namespace Wimc.Business.Managers
         Task<ResourceContainer> Create(string name, string containerJson);
 
         Task<ResourceContainer> GetById(int resourceContainerId);
+        
+        Task Edit(EditResourceContainer editResourceContainer);
     }
 }

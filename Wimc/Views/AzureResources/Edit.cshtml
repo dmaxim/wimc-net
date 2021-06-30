@@ -1,0 +1,17 @@
+@model EditResourceContainerViewModel
+
+<form asp-action="Edit" asp-controller="AzureResources">
+    <div class="card">
+        <input type="hidden" asp-for="ResourceContainerId" />
+        <div class="card-header">Edit</div>
+        <div class="card-body">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input type="text" asp-for="Name"/>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Save"/>
+        </div>
+    </div>
+</form>

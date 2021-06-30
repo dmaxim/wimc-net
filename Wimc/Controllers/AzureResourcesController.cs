@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Wimc.Business.Managers;
+using Wimc.Domain.Models;
 using Wimc.Models;
 
 namespace Wimc.Controllers
@@ -69,6 +70,19 @@ namespace Wimc.Controllers
             await _resourceManager.Migrate(model.ResourceId);
             return RedirectToAction("Detail", new {id = model.Id});
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var resource = await _resourceContainerManager.Get(id).ConfigureAwait(false);
+            return View(new EditResourceContainerViewModel(resource));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditResourceContainerViewModel model)
+        {
+            await _resourceContainerManager.Edit(new EditResourceContainer(model.ResourceContainerId, model.Name)).ConfigureAwait(false);
+            return RedirectToAction("Index");
+        }
     }
 }

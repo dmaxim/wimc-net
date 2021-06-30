@@ -26,5 +26,7 @@ namespace Wimc.Business.Managers
             resource.IsMigrated = true;
             await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
         }
+
+
     }
 }
