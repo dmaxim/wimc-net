@@ -10,3 +10,14 @@
         </pre>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        Resource Definition
+    </div>
+    <div class="card-body">
+        <pre>
+            @Html.Raw(Newtonsoft.Json.Linq.JToken.Parse(@Model.ResourceJson).ToString(Newtonsoft.Json.Formatting.Indented))
+        </pre>        
+    </div>
+</div>
