@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mx.Library.Serialization;
+using Newtonsoft.Json.Linq;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
 
@@ -36,10 +37,18 @@ namespace Wimc.Business.Managers
                 RawJson =  containerJson
                 
             };
-            
-            var azureResources = containerJson.DeserializeJson<IList<AzureResource>>();
-            newContainer.Resources = azureResources.Select(azureResource => new Resource(azureResource)).ToList();
-            
+
+
+            var resources = new List<Resource>();
+            var resourceArray = JArray.Parse(containerJson);
+            foreach (var resourceObject in resourceArray)
+            {
+                var resourceJson = resourceObject.ToJson();
+                var azureResource = resourceJson.DeserializeJson<AzureResource>();
+                resources.Add(new Resource(azureResource, resourceJson));
+            }
+
+            newContainer.Resources = resources;
             _resourceContainerRepository.Insert(newContainer);
             await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
             return newContainer;

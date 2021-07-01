@@ -15,6 +15,11 @@ namespace Wimc.Domain.Models
             ResourceLocation = azureResource.Location;
             IsMigrated = false;
         }
+
+        public Resource(AzureResource azureResource, string resourceJson) : this(azureResource)
+        {
+            ResourceDefinition = resourceJson;
+        }
         public int ResourceId { get; set; }
         
         public int ResourceContainerId { get; set; }
