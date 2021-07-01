@@ -9,7 +9,7 @@ namespace Wimc.Business.Managers
 
         Task Migrate(int resourceId);
 
-        Task<string> GetTemplate(string resourceType);
+        Task<string> GetTemplate(string resourceType, string templatePath);
 
     }
 }

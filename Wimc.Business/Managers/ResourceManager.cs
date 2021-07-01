@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
@@ -27,9 +28,20 @@ namespace Wimc.Business.Managers
             await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public Task<string> GetTemplate(string resourceType)
+        public async Task<string> GetTemplate(string resourceType, string templatePath)
         {
-            return Task.FromResult("some template here");
+            return await GetTemplateContent(resourceType, templatePath).ConfigureAwait(false);
+        }
+
+        private async Task<string> GetTemplateContent(string resourceType, string templatePath)
+        {
+            var contentPath = $"{templatePath}/templates/{resourceType}.tf";
+            if (!File.Exists(contentPath))
+            {
+                return "Does not exist";
+            }
+
+            return await File.ReadAllTextAsync(contentPath).ConfigureAwait(false);
         }
     }
 }
