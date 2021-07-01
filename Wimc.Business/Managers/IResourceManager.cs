@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Wimc.Domain.Models;
 
@@ -10,6 +11,8 @@ namespace Wimc.Business.Managers
         Task Migrate(int resourceId);
 
         Task<string> GetTemplate(string resourceType, string templatePath);
+
+        Task<IList<string>> GetResourceTypes();
 
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Wimc.Domain.Models;
@@ -31,6 +32,11 @@ namespace Wimc.Business.Managers
         public async Task<string> GetTemplate(string resourceType, string templatePath)
         {
             return await GetTemplateContent(resourceType, templatePath).ConfigureAwait(false);
+        }
+
+        public async Task<IList<string>> GetResourceTypes()
+        {
+            return await _resourceRepository.GetDistinctResources().ConfigureAwait(false);
         }
 
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)
