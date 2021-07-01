@@ -98,5 +98,11 @@ namespace Wimc.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Generate(int id)
+        {
+            return View();
+        }
     }
 }

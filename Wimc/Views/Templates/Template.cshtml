@@ -1,0 +1,12 @@
+@model TemplateViewModel
+
+<div class="card">
+    <div class="card-header">
+        @Html.DisplayFor(model => model.TemplateType)
+    </div>
+    <div class="card-body">
+        <pre>
+            @Html.DisplayFor(model => model.Content)
+        </pre>
+    </div>
+</div>

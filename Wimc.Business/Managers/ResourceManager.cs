@@ -27,6 +27,9 @@ namespace Wimc.Business.Managers
             await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
         }
 
-
+        public Task<string> GetTemplate(string resourceType)
+        {
+            return Task.FromResult("some template here");
+        }
     }
 }
