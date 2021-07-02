@@ -21,3 +21,14 @@
         </pre>        
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        API Definition
+    </div>
+    <div class="card-body">
+        <pre>
+            @Html.Raw(Newtonsoft.Json.Linq.JToken.Parse(@Model.FullDefinition).ToString(Newtonsoft.Json.Formatting.Indented))
+        </pre> 
+    </div>
+</div>

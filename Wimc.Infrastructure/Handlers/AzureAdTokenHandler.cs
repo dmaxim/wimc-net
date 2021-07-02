@@ -23,7 +23,7 @@ namespace Wimc.Infrastructure.Handlers
                 throw new ArgumentNullException(nameof(config.Resource));
 
             _apiResourceId = config.Resource;
-            _authority = config.Instance;
+            _authority = $"{config.Instance}/{config.TenantId}";
             _clientId = config.ClientId;
             _clientSecret = config.ClientSecret;
         }

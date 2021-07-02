@@ -13,6 +13,8 @@ namespace Wimc.Business.Managers
         Task<string> GetTemplate(string resourceType, string templatePath);
 
         Task<IList<string>> GetResourceTypes();
+        
+        Task<string> GetResourceDefinition(string resourceId);
 
     }
 }

@@ -39,6 +39,11 @@ namespace Wimc.Business.Managers
             return await _resourceRepository.GetDistinctResources().ConfigureAwait(false);
         }
 
+        public async Task<string> GetResourceDefinition(string resourceId)
+        {
+            return await _resourceRepository.GetResourceDefinition(resourceId).ConfigureAwait(false);
+        }
+
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)
         {
             var contentPath = $"{templatePath}/templates/{resourceType}.tf";

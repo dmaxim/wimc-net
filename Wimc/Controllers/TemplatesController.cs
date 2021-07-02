@@ -22,7 +22,9 @@ namespace Wimc.Controllers
         {
             var resource = await _resourceManager.Get(id).ConfigureAwait(false);
             var template = await _resourceManager.GetTemplate(resource.ResourceType, _webHostEnvironment.WebRootPath).ConfigureAwait(false);
-            return View(new TemplateViewModel(resource, template));
+            var resourceDefinition =
+                await _resourceManager.GetResourceDefinition(resource.CloudId).ConfigureAwait(false);
+            return View(new TemplateViewModel(resource, template, resourceDefinition));
         }
 
         [HttpGet]
