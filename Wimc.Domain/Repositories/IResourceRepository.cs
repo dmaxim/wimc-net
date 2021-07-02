@@ -8,5 +8,7 @@ namespace Wimc.Domain.Repositories
     public interface IResourceRepository : IRepository<Resource>
     {
         Task<IList<string>> GetDistinctResources();
+
+        Task<string> GetResourceDefinition(string resourceId);
     }
 }
