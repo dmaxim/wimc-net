@@ -59,7 +59,7 @@ namespace Wimc.Business.Managers
             var newContainer = new ResourceContainer
             {
                 ContainerName = name,
-                RawJson =  containerJson
+                //RawJson =  containerJson
                 
             };
 
@@ -67,6 +67,8 @@ namespace Wimc.Business.Managers
             var resources = new List<Resource>();
             var resourceContainer = JObject.Parse(containerJson);
             var resourceArray = (JArray) resourceContainer["value"];
+
+            newContainer.RawJson = resourceArray.ToString();
             foreach (var resourceObject in resourceArray)
             {
                 var resourceJson = resourceObject.ToJson();
