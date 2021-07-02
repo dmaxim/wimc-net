@@ -54,6 +54,32 @@ namespace Wimc.Business.Managers
             return newContainer;
         }
 
+        public async Task<ResourceContainer> CreateFromDefinition(string name, string containerJson)
+        {
+            var newContainer = new ResourceContainer
+            {
+                ContainerName = name,
+                RawJson =  containerJson
+                
+            };
+
+
+            var resources = new List<Resource>();
+            var resourceContainer = JObject.Parse(containerJson);
+            var resourceArray = (JArray) resourceContainer["value"];
+            foreach (var resourceObject in resourceArray)
+            {
+                var resourceJson = resourceObject.ToJson();
+                var azureResource = resourceJson.DeserializeJson<AzureResource>();
+                resources.Add(new Resource(azureResource, resourceJson));
+            }
+
+            newContainer.Resources = resources;
+            _resourceContainerRepository.Insert(newContainer);
+            await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
+            return newContainer;
+        }
+
         public async Task<ResourceContainer> GetById(int resourceContainerId)
         {
             return await _resourceContainerRepository.Get(resourceContainerId).ConfigureAwait(false);
@@ -78,6 +104,11 @@ namespace Wimc.Business.Managers
                 _resourceContainerRepository.Delete(container);
                 await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
             }
+        }
+
+        public async Task<string> GetDefinition(string resourceContainerName)
+        {
+            return await _resourceContainerRepository.GetDefinition(resourceContainerName).ConfigureAwait(false);
         }
     }
 }

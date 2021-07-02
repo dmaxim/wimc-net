@@ -1,0 +1,18 @@
+@model InspectContainerViewModel
+
+<form asp-action="Inspect" asp-controller="AzureResources">
+<div class="card">
+    <div class="card-header">
+        Inspector
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <label asp-for="ResourceContainerName" class="form-control"></label>
+            <input type="text" asp-for="ResourceContainerName" class="form-control"/>    
+        </div>
+    </div>
+    <div class="card-footer">
+        <input type="submit" asp-action="Inspect" asp-controller="AzureResources" value="Inspect" />
+    </div>
+</div>
+</form>

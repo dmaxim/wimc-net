@@ -8,5 +8,6 @@ namespace Wimc.Domain.Clients
         HttpClient HttpClient { get; }
         Task<string> GetResourceDefinition(string resourceId);
 
+        Task<string> GetResourceContainerDefinition(string resourceContainerName);
     }
 }

@@ -98,6 +98,25 @@ namespace Wimc.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Inspect()
+        {
+            return View(new InspectContainerViewModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Inspect(InspectContainerViewModel model)
+        {
+            var containerJson = await _resourceContainerManager.GetDefinition(model.ResourceContainerName);
+            var newResourceContainer = await _resourceContainerManager.CreateFromDefinition(model.ResourceContainerName, containerJson);
+            
+            var viewModel = new ResourceDetailViewModel(model.ResourceContainerName, containerJson, newResourceContainer.Resources);
+            return View("Detail", viewModel);
+            
+        }
+        
+        
         
     }
 }

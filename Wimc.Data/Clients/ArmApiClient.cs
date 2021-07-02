@@ -34,5 +34,21 @@ namespace Wimc.Data.Clients
 
             return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
+
+        public async Task<string> GetResourceContainerDefinition(string resourceContainerName)
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"subscriptions/{_apiConfiguration.SubscriptionId}/resourcegroups/{resourceContainerName}/resources?{_apiConfiguration.ApiVersion}");
+
+            using var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new MxNotFoundException($"Resource container {resourceContainerName} was not found");
+            }
+
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+
+        }
     }
 }
