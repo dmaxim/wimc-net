@@ -16,6 +16,7 @@ namespace Wimc.Data.Clients
         private readonly IList<string> _apiVersions  = new List<string>()
         {
             "2021-05-01",
+            "2021-04-01",
             "2021-03-01",
             "2021-02-01",
             "2020-11-01",
@@ -24,7 +25,10 @@ namespace Wimc.Data.Clients
             "2016-07-01",
             "2015-06-15",
             "2019-05-01",
-            "2017-10-01"
+            "2017-10-01",
+            "2020-02-02",
+            "2018-04-16"
+            
         };
         public ArmApiClient(HttpClient httpClient, IOptions<ArmApiClientConfig> configuration)
         {
