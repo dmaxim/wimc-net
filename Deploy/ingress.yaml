@@ -31,3 +31,5 @@ spec:
   - hosts:
     - wimc.danmaxim.net
     secretName: wimc-net-secret
+
+  
