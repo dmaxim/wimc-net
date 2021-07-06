@@ -21,8 +21,7 @@ namespace Wimc.Data.Clients
             "2020-11-01",
             "2020-09-01",
             "2020-08-01",
-            "2016-10-01",
-            "2016-01-01",
+            "2016-07-01",
             "2015-06-15",
         };
         public ArmApiClient(HttpClient httpClient, IOptions<ArmApiClientConfig> configuration)
@@ -56,6 +55,11 @@ namespace Wimc.Data.Clients
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 throw new MxNotFoundException($"Resource container {resourceContainerName} was not found");
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                throw new MxApplicationStateException(responseContent);
             }
 
             return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
