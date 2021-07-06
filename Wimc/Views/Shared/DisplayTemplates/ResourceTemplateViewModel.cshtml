@@ -1,0 +1,13 @@
+@model ResourceTemplateViewModel
+
+
+
+
+<div class="card">
+    <div class="card-title">@Html.DisplayFor(model => model.ResourceName)</div>
+    <div class="card-body">
+    <pre>
+                @Html.DisplayFor(model => model.Template)
+            </pre>    
+    </div>
+</div>

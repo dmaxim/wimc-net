@@ -26,7 +26,9 @@ namespace Wimc.Business.Managers
         public async Task<ResourceContainer> Get(int resourceContainerId)
         {
             return await _resourceContainerRepository
-                .FindSingleAsync(container => container.ResourceContainerId == resourceContainerId).ConfigureAwait(false);
+                .GetAll().Include(container => container.Resources)
+                .FirstOrDefaultAsync(container => container.ResourceContainerId == resourceContainerId)
+                .ConfigureAwait(false);
         }
 
         public async Task<ResourceContainer> Create(string name, string containerJson)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace Wimc.Controllers
     {
         private readonly IResourceManager _resourceManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public TemplatesController(IResourceManager resourceManager, IWebHostEnvironment webHostEnvironment)
+        private readonly IResourceContainerManager _resourceContainerManager;
+        public TemplatesController(IResourceManager resourceManager, IResourceContainerManager resourceContainerManager, IWebHostEnvironment webHostEnvironment)
         {
             _resourceManager = resourceManager;
             _webHostEnvironment = webHostEnvironment;
+            _resourceContainerManager = resourceContainerManager;
         }
         
         [HttpGet]
@@ -33,6 +36,23 @@ namespace Wimc.Controllers
             var resourceTypes = await _resourceManager.GetResourceTypes().ConfigureAwait(false);
             return View(new ResourceTypesViewModel(resourceTypes));
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> ContainerTemplate(int id)
+        {
+            var resourceContainer = await _resourceContainerManager.Get(id).ConfigureAwait(false);
+
+            var templates = new List<ResourceTemplateViewModel>();
+            foreach (var resource in resourceContainer.Resources)
+            {
+                var template = await _resourceManager.GetTemplate(resource.ResourceType, _webHostEnvironment.WebRootPath)
+                    .ConfigureAwait(false);
+                
+                templates.Add(new ResourceTemplateViewModel(resource.ResourceName, template));
+            }
+
+            return View(new ContainerTemplateViewModel(resourceContainer.ContainerName, templates));
+
+        }
     }
 }
