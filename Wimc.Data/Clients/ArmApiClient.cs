@@ -35,15 +35,7 @@ namespace Wimc.Data.Clients
 
         public async Task<string> GetResourceDefinition(string resourceId)
         {
-            using var request =
-                new HttpRequestMessage(HttpMethod.Get, $"{resourceId}?{_apiConfiguration.ApiVersion}");
-            
-            using var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
-            if (response.StatusCode == HttpStatusCode.NotFound)
-            {
-                throw new MxNotFoundException($"Resource {resourceId} was not found");
-            }
-            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return await GetResource(resourceId).ConfigureAwait(false);
         }
 
         public async Task<string> GetResourceContainerDefinition(string resourceContainerName)
