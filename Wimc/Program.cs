@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Wimc
 {
@@ -23,9 +19,17 @@ namespace Wimc
                     configurationBuilder.AddJsonFile("appsettings.json", false, reloadOnChange: true);
                     configurationBuilder.AddJsonFile("appsettings.secrets.json", true, reloadOnChange: true);
                 })
+                .UseSerilog((ctx, config) =>
+                {
+                    config.ReadFrom.Configuration(ctx.Configuration)
+                        .Enrich.FromLogContext();
+
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    
                 });
+        
     }
 }

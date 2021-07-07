@@ -11,13 +11,17 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using Wimc.Infrastructure;
 using Wimc.Infrastructure.DI;
+using Wimc.Infrastructure.Logging.Middleware;
 
 namespace Wimc
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,34 +32,28 @@ namespace Wimc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          /*
-            ConfigureAuthentication(services);
-          
-            services.AddAuthorization(config =>
-            {
-                var authenticationPolicy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-
-                config.DefaultPolicy = authenticationPolicy;
-            });
-            */
+           /*
+              ConfigureAuthentication(services);
+            
+              services.AddAuthorization(config =>
+              {
+                  var authenticationPolicy = new AuthorizationPolicyBuilder()
+                      .RequireAuthenticatedUser()
+                      .Build();
+  
+                  config.DefaultPolicy = authenticationPolicy;
+              });
+              */
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
             //AddDataProtection(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseCustomExceptionHandler("Wimc-net", "/home/error");
+            
             app.UseStaticFiles();
 
             app.UseRouting();
