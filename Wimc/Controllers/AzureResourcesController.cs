@@ -36,7 +36,7 @@ namespace Wimc.Controllers
 
             var newResourceContainer = await _resourceContainerManager.Create(newResourceViewModel.Name, fileContents);
             
-            var model = new ResourceDetailViewModel(newResourceViewModel.Name, fileContents, newResourceContainer.Resources);
+            var model = new ResourceDetailViewModel(newResourceViewModel.Name, fileContents, newResourceContainer.ResourceContainerId, newResourceContainer.Resources);
             return View("Detail", model);
         }
 
@@ -45,7 +45,7 @@ namespace Wimc.Controllers
             var resourceContainer = await _resourceContainerManager.GetById(id);
 
             return View("Detail",
-                new ResourceDetailViewModel(resourceContainer.ContainerName,  resourceContainer.RawJson, resourceContainer.Resources));
+                new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.RawJson,resourceContainer.ResourceContainerId, resourceContainer.Resources));
         }
         
         private async Task<string> ReadResourceJson(IFormFile formFile)
@@ -56,11 +56,11 @@ namespace Wimc.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Migrate(int id)
+        public async Task<IActionResult> Migrate(int id, int containerId)
         {
             var resource = await _resourceManager.Get(id).ConfigureAwait(false);
 
-            return View(new AzureResourceViewModel(resource));
+            return View(new AzureResourceViewModel(resource, containerId));
         }
 
 
@@ -68,7 +68,7 @@ namespace Wimc.Controllers
         public async Task<IActionResult> Migrate(AzureResourceViewModel model)
         {
             await _resourceManager.Migrate(model.ResourceId);
-            return RedirectToAction("Detail", new {id = model.Id});
+            return RedirectToAction("Detail", new {id =  model.ResourceContainerId});
         }
 
         [HttpGet]
@@ -111,7 +111,7 @@ namespace Wimc.Controllers
             var containerJson = await _resourceContainerManager.GetDefinition(model.ResourceContainerName);
             var newResourceContainer = await _resourceContainerManager.CreateFromDefinition(model.ResourceContainerName, containerJson);
             
-            var viewModel = new ResourceDetailViewModel(model.ResourceContainerName, containerJson, newResourceContainer.Resources);
+            var viewModel = new ResourceDetailViewModel(model.ResourceContainerName, containerJson, newResourceContainer.ResourceContainerId, newResourceContainer.Resources);
             return View("Detail", viewModel);
             
         }

@@ -7,11 +7,11 @@ namespace Wimc.Models
 {
     public class ResourceDetailViewModel
     {
-        public ResourceDetailViewModel(string name, string json, ICollection<Resource> resources)
+        public ResourceDetailViewModel(string name, string json, int containerId, ICollection<Resource> resources)
         {
             Name = name;
             Json = json;
-            Resources = resources.Select(resource => new AzureResourceViewModel(resource)).ToList();
+            Resources = resources.Select(resource => new AzureResourceViewModel(resource, containerId)).ToList();
         }
         public string Name { get; set; }
 

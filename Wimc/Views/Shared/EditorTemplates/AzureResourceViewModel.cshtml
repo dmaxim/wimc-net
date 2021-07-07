@@ -3,6 +3,7 @@
 
 <form asp-action="Migrate" asp-controller="AzureResources">
     @Html.HiddenFor(model => model.ResourceId)
+    @Html.HiddenFor(model => model.ResourceContainerId)
     <div class="card">
         <div class="card-body">
             <div class="form-group">

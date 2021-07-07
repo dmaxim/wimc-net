@@ -7,7 +7,7 @@
     <td>@Html.DisplayFor(model => model.Location)</td>
     <td>@Html.DisplayFor(model => model.IsMigrated)</td>
     <td>
-        <a asp-action="Migrate" asp-controller="AzureResources" asp-route-id="@Model.ResourceId" class="btn btn-primary">Migrate</a>
+        <a asp-action="Migrate" asp-controller="AzureResources" asp-route-id="@Model.ResourceId" asp-route-containerId="@Model.ResourceContainerId" class="btn btn-primary">Migrate</a>
         <a asp-action="Template" asp-controller="Templates" asp-route-id="@Model.ResourceId" class="btn btn-primary">Generate</a>
     </td>
 </tr>

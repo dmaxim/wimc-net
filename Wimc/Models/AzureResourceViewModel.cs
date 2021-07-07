@@ -17,7 +17,13 @@ namespace Wimc.Models
             IsMigrated = resource.IsMigrated;
             Definition = resource.ResourceDefinition;
         }
+
+        public AzureResourceViewModel(Resource resource, int resourceContainerId) : this(resource)
+        {
+            ResourceContainerId = resourceContainerId;
+        }
         
+        public int ResourceContainerId { get; set; }
         public int ResourceId { get; set;  }
         public string Id { get; set; }
         public string Location { get; set; }
