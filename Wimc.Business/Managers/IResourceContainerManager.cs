@@ -21,5 +21,7 @@ namespace Wimc.Business.Managers
         Task Delete(int resourceContainerId);
 
         Task<string> GetDefinition(string resourceContainerName);
+
+        Task<IList<ResourceContainer>> GetAllWithResources();
     }
 }

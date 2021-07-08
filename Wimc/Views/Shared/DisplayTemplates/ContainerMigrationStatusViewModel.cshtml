@@ -1,0 +1,16 @@
+@using Microsoft.Extensions.WebEncoders.Testing
+@model ContainerMigrationStatusViewModel
+
+
+<div>
+    <label asp-for="ResourceCount"></label>
+    @Html.DisplayFor(model => model.ResourceCount)
+</div>
+<div>
+    <label asp-for="MigratedCount"></label>
+    @Html.DisplayFor(model => model.MigratedCount)
+</div>
+<div>
+    <label asp-for="MigrationPercent"></label>
+    @Html.DisplayFor(model => model.MigrationPercent)
+</div>

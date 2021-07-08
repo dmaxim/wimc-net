@@ -114,5 +114,12 @@ namespace Wimc.Business.Managers
         {
             return await _resourceContainerRepository.GetDefinition(resourceContainerName).ConfigureAwait(false);
         }
+
+        public async Task<IList<ResourceContainer>> GetAllWithResources()
+        {
+            return await _resourceContainerRepository.GetAll()
+                .Include(container => container.Resources)
+                .ToListAsync().ConfigureAwait(false);
+        }
     }
 }

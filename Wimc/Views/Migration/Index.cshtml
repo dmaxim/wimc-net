@@ -1,0 +1,29 @@
+@model ContainerMigrationsViewModel
+<div class="card">
+    <div class="card-title">Containers</div>
+    <div class="card-body">
+        <div class="table">
+            <table class="table-striped">
+                <thead>
+                <tr>
+                    <th>Container</th>
+                    <th>Resources</th>
+                    <th>Migrated</th>
+                    <th>Status</th>
+                </tr>
+                </thead>      
+                <tbody>
+                    @Html.DisplayFor(model => model.Containers)
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">Migration Status</div>
+    <div class="card-body">
+        @Html.DisplayFor(model => model.MigrationStatus)
+    </div>
+</div>
