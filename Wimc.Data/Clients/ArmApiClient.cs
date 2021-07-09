@@ -31,7 +31,8 @@ namespace Wimc.Data.Clients
             "2019-09-01",
             "2015-06-15",
             "2019-06-01",
-            "2014-08-01"
+            "2014-08-01",
+            "2018-10-01-preview"
             
         };
         public ArmApiClient(HttpClient httpClient, IOptions<ArmApiClientConfig> configuration)
