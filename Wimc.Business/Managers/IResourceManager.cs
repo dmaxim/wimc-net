@@ -16,5 +16,7 @@ namespace Wimc.Business.Managers
         
         Task<string> GetResourceDefinition(string resourceId);
 
+        Task UpdateNotes(int resourceId, string notes);
+
     }
 }

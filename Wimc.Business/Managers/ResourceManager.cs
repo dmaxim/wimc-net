@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Mx.Library.ExceptionHandling;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
 
@@ -42,6 +43,20 @@ namespace Wimc.Business.Managers
         public async Task<string> GetResourceDefinition(string resourceId)
         {
             return await _resourceRepository.GetResourceDefinition(resourceId).ConfigureAwait(false);
+        }
+
+        public async Task UpdateNotes(int resourceId, string notes)
+        {
+            var existingResource = await _resourceRepository.FindSingleAsync(resource => resource.ResourceId == resourceId)
+                .ConfigureAwait(false);
+
+            if (existingResource == null)
+            {
+                throw new MxNotFoundException($"Resource with id {resourceId} does not exist");
+            }
+
+            existingResource.Notes = notes;
+            await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
         }
 
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)

@@ -14,6 +14,7 @@ namespace Wimc.Domain.Models
             ResourceDefinition = azureResource.ToJson();
             ResourceLocation = azureResource.Location;
             IsMigrated = false;
+            Notes = azureResource.Notes;
         }
 
         public Resource(AzureResource azureResource, string resourceJson) : this(azureResource)
@@ -34,5 +35,7 @@ namespace Wimc.Domain.Models
         public string ResourceDefinition { get; set; }
          
         public bool IsMigrated { get; set; }
+        
+        public string Notes { get; set; }
     }
 }

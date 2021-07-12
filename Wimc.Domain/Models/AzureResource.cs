@@ -10,7 +10,7 @@ namespace Wimc.Domain.Models
         //public Sku Sku { get; set; }
 
         //public Identity Identity { get; set; }
-        
+        public string Notes { get; set;  }
 
 
     }

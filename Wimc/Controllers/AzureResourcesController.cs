@@ -115,7 +115,20 @@ namespace Wimc.Controllers
             return View("Detail", viewModel);
             
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> Notes(int id, int containerId)
+        {
+            var resource = await _resourceManager.Get(id).ConfigureAwait(false);
+            return View(new EditResourceNotesViewModel(resource, containerId));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Notes(EditResourceNotesViewModel model)
+        {
+            await _resourceManager.UpdateNotes(model.ResourceId, model.Notes).ConfigureAwait(false);
+            return RedirectToAction("Detail", new {id =  model.ResourceContainerId});
+        }
         
         
     }

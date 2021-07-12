@@ -16,6 +16,7 @@ namespace Wimc.Models
             Location = resource.ResourceLocation;
             IsMigrated = resource.IsMigrated;
             Definition = resource.ResourceDefinition;
+            Notes = resource.Notes;
         }
 
         public AzureResourceViewModel(Resource resource, int resourceContainerId) : this(resource)
@@ -38,5 +39,7 @@ namespace Wimc.Models
         public string Type { get; set; }
         
         public string Definition { get; set; }
+        
+        public string Notes { get; set; }
     }
 }
