@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Wimc.Domain.AppConfiguration
 {
     public class ArmApiClientConfig
@@ -10,6 +12,9 @@ namespace Wimc.Domain.AppConfiguration
         public string SubscriptionId { get; set; }
         public string Resource { get; set; }
         public string BaseUri { get; set; }
+     
         public string ApiVersion { get; set; }
+        
+        public IList<string> ApiVersions { get; set; }
     }
 }

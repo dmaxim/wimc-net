@@ -12,35 +12,7 @@ namespace Wimc.Data.Clients
     public class ArmApiClient : IApiClient
     {
         private readonly ArmApiClientConfig _apiConfiguration;
-
-        private readonly IList<string> _apiVersions  = new List<string>()
-        {
-            "2021-05-01",
-            "2021-04-01",
-            "2021-03-01",
-            "2021-02-01",
-            "2020-12-01",
-            "2020-11-01",
-            "2020-09-01",
-            "2020-08-01",
-            "2016-07-01",
-            "2019-05-01",
-            "2017-12-01",
-            "2017-10-01",
-            "2017-04-01",
-            "2020-02-02",
-            "2018-04-16",
-            "2018-03-01",
-            "2019-09-01",
-            "2015-06-15",
-            "2019-06-01",
-            "2016-03-01",
-            "2014-08-01",
-            "2018-10-01-preview",
-            "2021-02-01-preview",
-            "2014-04-01"
-            
-        };
+  
         public ArmApiClient(HttpClient httpClient, IOptions<ArmApiClientConfig> configuration)
         {
             HttpClient = httpClient;
@@ -79,7 +51,7 @@ namespace Wimc.Data.Clients
         private async Task<string> GetResource(string resourceId)
         {
             var lastResponse = string.Empty;
-            foreach (var apiVersion in _apiVersions)
+            foreach (var apiVersion in _apiConfiguration.ApiVersions)
             {
                 using var request =
                     new HttpRequestMessage(HttpMethod.Get, $"{resourceId}?api-version={apiVersion}");
