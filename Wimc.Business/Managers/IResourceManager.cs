@@ -8,6 +8,8 @@ namespace Wimc.Business.Managers
     {
         Task<Resource> Get(int resourceId);
 
+        Task<IList<Resource>> Get(string resourceType);
+
         Task Migrate(int resourceId);
 
         Task<string> GetTemplate(string resourceType, string templatePath);

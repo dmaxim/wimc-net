@@ -17,5 +17,7 @@ namespace Wimc.Models
 
         public string Json { get; set; }
         public IList<AzureResourceViewModel> Resources { get; set; }
+        
+
     }
 }

@@ -30,12 +30,6 @@ namespace Wimc.Controllers
             return View(new TemplateViewModel(resource, template, resourceDefinition));
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ResourceTypes()
-        {
-            var resourceTypes = await _resourceManager.GetResourceTypes().ConfigureAwait(false);
-            return View(new ResourceTypesViewModel(resourceTypes));
-        }
 
         [HttpGet]
         public async Task<IActionResult> ContainerTemplate(int id)

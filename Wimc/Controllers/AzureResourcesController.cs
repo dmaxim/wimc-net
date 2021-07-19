@@ -37,6 +37,7 @@ namespace Wimc.Controllers
             var newResourceContainer = await _resourceContainerManager.Create(newResourceViewModel.Name, fileContents);
             
             var model = new ResourceDetailViewModel(newResourceViewModel.Name, fileContents, newResourceContainer.ResourceContainerId, newResourceContainer.Resources);
+            
             return View("Detail", model);
         }
 

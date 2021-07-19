@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Mx.Library.ExceptionHandling;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
@@ -20,6 +22,13 @@ namespace Wimc.Business.Managers
         {
             return await _resourceRepository.FindSingleAsync(resource => resource.ResourceId.Equals(resourceId))
                 .ConfigureAwait(false);
+        }
+
+        public async Task<IList<Resource>> Get(string resourceType)
+        {
+            return await _resourceRepository.GetAll()
+                .Where(resource => resource.ResourceType.Equals(resourceType))
+                .ToListAsync();
         }
 
         public async Task Migrate(int resourceId)

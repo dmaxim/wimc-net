@@ -1,5 +1,10 @@
+@using System.Net
+@using System.Web
 @model ResourceTypeViewModel
 
 <tr>
     <td>@Html.DisplayFor(model => model.ResourceType)</td>
+    <td>
+        <a asp-action="Resources" asp-controller="ResourceTypes" class="btn btn-primary" asp-route-id="@HttpUtility.UrlEncode(@Model.ResourceType)" >View</a>
+    </td>
 </tr>
