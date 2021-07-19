@@ -20,5 +20,7 @@ namespace Wimc.Business.Managers
 
         Task UpdateNotes(int resourceId, string notes);
 
+        Task UnMigrate(string resourceType);
+
     }
 }

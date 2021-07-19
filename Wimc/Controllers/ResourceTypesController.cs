@@ -44,9 +44,21 @@ namespace Wimc.Controllers
         public async Task<IActionResult> Migrate(int id,[FromForm] ResourceTypeResourceViewModel model)
         {
             await _resourceManager.Migrate(model.ResourceId);
-            return RedirectToAction("Resources", new {id = HttpUtility.HtmlEncode(model.Type)});
+            return RedirectToAction("Resources", new {id = HttpUtility.UrlEncode(model.Type)});
         }
         
+        [HttpGet]
+        public IActionResult UnMigrate(string id)
+        {
+            return View(new UnMigrateViewModel(HttpUtility.UrlDecode(id)));
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> UnMigrate(UnMigrateViewModel model)
+        {
+            await _resourceManager.UnMigrate(model.ResourceType).ConfigureAwait(false);
+            return RedirectToAction("Resources", new {id = HttpUtility.UrlEncode(model.ResourceType)});
+        }
+        
     }
 }

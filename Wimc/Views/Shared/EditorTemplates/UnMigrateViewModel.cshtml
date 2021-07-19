@@ -1,0 +1,7 @@
+@model UnMigrateViewModel
+
+<form asp-action="UnMigrate" asp-controller="ResourceTypes">
+    Unmigrate @Html.DisplayFor(model => model.ResourceType)
+    <input type="hidden" asp-for="ResourceType" />
+    <input type="submit" value="Un-migrate">
+</form>

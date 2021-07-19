@@ -68,6 +68,21 @@ namespace Wimc.Business.Managers
             await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task UnMigrate(string resourceType)
+        {
+            var resources = await _resourceRepository.GetAll()
+                .Where(resource => resource.ResourceType.Equals(resourceType))
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            foreach (var resource in resources)
+            {
+                resource.IsMigrated = false;
+            }
+
+            await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)
         {
             var contentPath = $"{templatePath}/templates/{resourceType}.tf";
