@@ -1,6 +1,18 @@
 @model ResourceListViewModel
 
 <div class="card">
+    <div class="card-title">
+        <div class="form-group">
+            <label asp-for="ResourceCount"></label>
+            @Html.DisplayFor(model => model.ResourceCount)
+        </div>
+        <div class="form-group">
+            <label asp-for="MigratedCount"></label>
+            @Html.DisplayFor(model => model.MigratedCount)
+        </div>
+    </div>
+</div>
+<div class="card">
     <div class="card-title">@Html.DisplayFor(model => model.ResourceType) Resources</div>
     <div class="card-body">
         <div class="table">
