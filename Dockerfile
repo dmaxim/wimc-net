@@ -25,7 +25,6 @@ FROM build AS publish
 RUN dotnet publish Wimc.csproj -c Release -o /app
 
 FROM base AS final
-RUN apt-get update && apt-get upgrade -y # Patch base image due to CVE 
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Wimc.dll"]
