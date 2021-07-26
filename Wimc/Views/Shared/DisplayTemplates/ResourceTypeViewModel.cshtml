@@ -4,7 +4,7 @@
 <tr>
     <td>@Html.DisplayFor(model => model.ResourceType)</td>
     <td>
-        <a asp-action="Resources" asp-controller="ResourceTypes" class="btn btn-primary" asp-route-id="@HttpUtility.UrlEncode(@Model.ResourceType)" >View</a>
-        <a asp-action="UnMigrate" asp-controller="ResourceTypes" asp-route-id="@HttpUtility.UrlEncode(@Model.ResourceType)" class="btn btn-danger">Un-migrate</a>
+        <a asp-action="Resources" asp-controller="ResourceTypes" asp-route-id="@HttpUtility.UrlEncode(@Model.ResourceType)"><span title="View" class="material-icons">description</span></a>
+        <a asp-action="UnMigrate" asp-controller="ResourceTypes" asp-route-id="@HttpUtility.UrlEncode(@Model.ResourceType)"><span title="Un-migrate" class="material-icons">undo</span></a>
     </td>
 </tr>

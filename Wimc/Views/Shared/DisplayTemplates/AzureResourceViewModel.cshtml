@@ -8,8 +8,8 @@
     <td>@Html.DisplayFor(model => model.IsMigrated)</td>
     <td>@Html.DisplayFor(model => model.Notes)</td>
     <td>
-        <a asp-action="Migrate" asp-controller="AzureResources" asp-route-id="@Model.ResourceId" asp-route-containerId="@Model.ResourceContainerId" class="btn btn-primary">Migrate</a>
-        <a asp-action="Template" asp-controller="Templates" asp-route-id="@Model.ResourceId" class="btn btn-primary">Generate</a>
-        <a asp-action="Notes" asp-controller="AzureResources" asp-route-id="@Model.ResourceId" asp-route-containerId="@Model.ResourceContainerId" class="btn btn-primary">Notes</a>
+        <a asp-action="Migrate" asp-controller="AzureResources" asp-route-id="@Model.ResourceId" asp-route-containerId="@Model.ResourceContainerId"><span class="material-icons" title="Migrate">done</span></a>
+        <a asp-action="Template" asp-controller="Templates" asp-route-id="@Model.ResourceId"><span class="material-icons" title="Generate">build</span></a>
+        <a asp-action="Notes" asp-controller="AzureResources" asp-route-id="@Model.ResourceId" asp-route-containerId="@Model.ResourceContainerId"><span class="material-icons" title="Notes>">note</span></a>
     </td>
 </tr>

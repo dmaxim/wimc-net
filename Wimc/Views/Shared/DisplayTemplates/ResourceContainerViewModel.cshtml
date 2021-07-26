@@ -4,9 +4,9 @@
 <tr>
     <td>@Html.DisplayFor(model => model.ContainerName)</td>
     <td>
-        <a asp-action="Detail" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" class="btn btn-primary">Detail</a>
-        <a asp-action="Edit" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" class="btn btn-secondary">Edit</a>
-        <a asp-action="Delete" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" class="btn btn-danger">Delete</a>
-        <a asp-action="ContainerTemplate" asp-controller="Templates" asp-route-id="@Model.ResourceContainerId" class="btn btn-primary">Generate</a>
+        <a asp-action="Detail" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Detail">description</span> </a>
+        <a asp-action="Edit" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId"><span class="material-icons" title="Edit">edit</span> </a>
+        <a asp-action="ContainerTemplate" asp-controller="Templates" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Generate">autorenew</span></a>
+        <a asp-action="Delete" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId"><span class="material-icons text-danger" title="Delete">delete</span></a>
     </td>
 </tr>
