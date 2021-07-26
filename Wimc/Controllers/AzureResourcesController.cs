@@ -130,6 +130,13 @@ namespace Wimc.Controllers
             await _resourceManager.UpdateNotes(model.ResourceId, model.Notes).ConfigureAwait(false);
             return RedirectToAction("Detail", new {id =  model.ResourceContainerId});
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Compare(int id)
+        {
+            var comparison = await _resourceContainerManager.CompareExistingToRemote(id).ConfigureAwait(false);
+            return View(new ResourceComparisonViewModel(comparison));
+        }
         
         
     }

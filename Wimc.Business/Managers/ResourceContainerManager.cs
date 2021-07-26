@@ -121,5 +121,15 @@ namespace Wimc.Business.Managers
                 .Include(container => container.Resources)
                 .ToListAsync().ConfigureAwait(false);
         }
+
+        public async Task<ResourceComparison> CompareExistingToRemote(int containerId)
+        {
+            var existing = await Get(containerId).ConfigureAwait(false);
+            var remoteDefinition = await GetDefinition(existing.ContainerName).ConfigureAwait(false);
+            var remote = await CreateFromDefinition(existing.ContainerName, remoteDefinition).ConfigureAwait(false);
+
+            return new ResourceComparison(existing.Resources.ToList(), remote.Resources.ToList(), containerId, existing.ContainerName);
+
+        }
     }
 }
