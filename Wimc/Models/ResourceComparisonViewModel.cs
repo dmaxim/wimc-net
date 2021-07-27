@@ -13,7 +13,9 @@ namespace Wimc.Models
             Deleted = resourceComparison.Deleted.Select(resource => new AzureResourceViewModel(resource, resourceComparison.ResourceContainerId))
                 .OrderBy(resource => resource.Name)
                 .ToList();
-            New = resourceComparison.New.Select(resource => new NewAzureResourceViewModel(resource, resourceComparison.ResourceContainerId)).ToList();
+            New = resourceComparison.New.Select(resource => new NewAzureResourceViewModel(resource, resourceComparison.ResourceContainerId))
+                .OrderBy(resource => resource.Name)
+                .ToList();
         }
         public int ContainerId { get; }
         public string ContainerName { get; }
