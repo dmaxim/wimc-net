@@ -25,7 +25,7 @@ namespace Wimc.Domain.Models
             return existing
                 .Where(existingResource => !remote.Any(remoteResource =>
                 existingResource.ResourceType == remoteResource.ResourceType &&
-                existingResource.ResourceName == remoteResource.ResourceName))
+                existingResource.CloudId == remoteResource.CloudId))
                 .ToList();
             
         }
@@ -35,7 +35,7 @@ namespace Wimc.Domain.Models
             return remote
                 .Where(remoteResource => !existing.Any(existingResource =>
                     remoteResource.ResourceType == existingResource.ResourceType &&
-                    remoteResource.ResourceName == existingResource.ResourceName))
+                    remoteResource.CloudId == existingResource.CloudId))
                 .ToList();
 
         }
