@@ -8,7 +8,7 @@ namespace Wimc.Domain.Models
         public int ResourceContainerId { get; set; }
         public string ContainerName { get; set; }
 
-        public ICollection<Resource> Resources { get; set; }
+        public List<Resource> Resources { get; set; }
         
         public string RawJson { get; set; }
         

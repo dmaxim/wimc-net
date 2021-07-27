@@ -36,8 +36,6 @@ namespace Wimc.Business.Builders
             var newContainer = new ResourceContainer
             {
                 ContainerName = name,
-                //RawJson =  containerJson
-                
             };
 
 
@@ -56,6 +54,22 @@ namespace Wimc.Business.Builders
             newContainer.Resources = resources;
 
             return newContainer;
+        }
+
+        public static IList<Resource> BuildResources(string resourcesJson)
+        {
+            var resources = new List<Resource>();
+            var resourceContainer = JObject.Parse(resourcesJson);
+            var resourceArray = (JArray) resourceContainer["value"];
+
+            foreach (var resourceObject in resourceArray)
+            {
+                var resourceJson = resourceObject.ToJson();
+                var azureResource = resourceJson.DeserializeJson<AzureResource>();
+                resources.Add(new Resource(azureResource, resourceJson));
+            }
+
+            return resources;
         }
         
     }

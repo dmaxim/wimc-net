@@ -9,5 +9,6 @@ namespace Wimc.Domain.Clients
         Task<string> GetResourceDefinition(string resourceId);
 
         Task<string> GetResourceContainerDefinition(string resourceContainerName);
+        
     }
 }
