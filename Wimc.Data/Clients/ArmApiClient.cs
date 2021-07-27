@@ -48,6 +48,22 @@ namespace Wimc.Data.Clients
 
         }
 
+        public async Task<string> ExecuteQuery(string uri, string apiVersion)
+        {
+            using var request =
+                new HttpRequestMessage(HttpMethod.Get, $"{uri}?api-version={apiVersion}");
+            
+            using var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return "Not Found";
+            }
+            else
+            {
+                return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+        }
+
         private async Task<string> GetResource(string resourceId)
         {
             var lastResponse = string.Empty;

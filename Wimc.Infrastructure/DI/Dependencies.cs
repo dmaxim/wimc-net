@@ -57,6 +57,7 @@ namespace Wimc.Infrastructure.DI
             services.AddTransient<IResourceRepository, ResourceRepository>();
             services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
             services.AddTransient<IResourceManager, ResourceManager>();
+            services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
 
             return services;
         }

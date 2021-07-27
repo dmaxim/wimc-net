@@ -9,6 +9,8 @@ namespace Wimc.Domain.Clients
         Task<string> GetResourceDefinition(string resourceId);
 
         Task<string> GetResourceContainerDefinition(string resourceContainerName);
-        
+
+        Task<string> ExecuteQuery(string uri, string apiVersion);
+
     }
 }

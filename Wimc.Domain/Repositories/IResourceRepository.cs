@@ -10,5 +10,7 @@ namespace Wimc.Domain.Repositories
         Task<IList<string>> GetDistinctResources();
 
         Task<string> GetResourceDefinition(string resourceId);
+
+        Task<string> GetResource(string url, string apiVersion);
     }
 }

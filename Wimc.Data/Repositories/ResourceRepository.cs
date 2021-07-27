@@ -29,5 +29,10 @@ namespace Wimc.Data.Repositories
         {
             return await _apiClient.GetResourceDefinition(resourceId).ConfigureAwait(false);
         }
+
+        public async Task<string> GetResource(string url, string apiVersion)
+        {
+            return await _apiClient.ExecuteQuery(url, apiVersion).ConfigureAwait(false);
+        }
     }
 }

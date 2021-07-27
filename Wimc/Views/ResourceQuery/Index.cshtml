@@ -1,0 +1,29 @@
+
+@model ResourceQueryViewModel
+<form asp-action="Index" asp-controller="ResourceQuery">
+<div class="card">
+    <div class="card-title">Query</div>
+    <div class="card-body">
+        <div class="form-group">
+            <label asp-for="Uri"></label>
+            <input type="text" asp-for="Uri" class="form-control input-group-lg"/>
+        </div>
+        <div class="form-group">
+            <label asp-for="ApiVersion"></label>
+            <input type="text" asp-for="ApiVersion" />
+        </div>    
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="Query" />
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-title">Results</div>
+    <div class="card-body">
+        <pre>
+            @Html.DisplayFor(model => model.Result)
+        </pre>
+    </div>
+</div>
+</form>
