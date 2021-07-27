@@ -1,0 +1,13 @@
+@using System.Web
+@model NewAzureResourceViewModel
+
+<tr>
+    <td>@Html.DisplayFor(model => model.Name)</td>
+    <td>@Html.DisplayFor(model => model.Type)</td>
+    <td>@Html.DisplayFor(model => model.Location)</td>
+    <td>@Html.DisplayFor(model => model.IsMigrated)</td>
+    <td>@Html.DisplayFor(model => model.Notes)</td>
+    <td>
+        <a asp-action="Add" asp-controller="AzureResources" asp-route-cloudId="@HttpUtility.UrlEncode(@Model.Id)" asp-route-id="@Model.ResourceContainerId"><span class="material-icons" title="Add">note_add</span></a>
+    </td>
+</tr>

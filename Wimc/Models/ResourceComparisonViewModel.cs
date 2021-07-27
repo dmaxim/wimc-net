@@ -12,13 +12,13 @@ namespace Wimc.Models
             ContainerName = resourceComparison.ContainerName;
             Deleted = resourceComparison.Deleted.Select(resource => new AzureResourceViewModel(resource, resourceComparison.ResourceContainerId))
                 .ToList();
-            New = resourceComparison.New.Select(resource => new AzureResourceViewModel(resource, resourceComparison.ResourceContainerId)).ToList();
+            New = resourceComparison.New.Select(resource => new NewAzureResourceViewModel(resource, resourceComparison.ResourceContainerId)).ToList();
         }
         public int ContainerId { get; }
         public string ContainerName { get; }
         
         public IList<AzureResourceViewModel> Deleted { get; }
         
-        public IList<AzureResourceViewModel> New { get; }
+        public IList<NewAzureResourceViewModel> New { get; }
     }
 }

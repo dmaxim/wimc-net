@@ -1,7 +1,10 @@
 ﻿using System.IO;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Wimc.Business.Builders;
 using Wimc.Business.Managers;
 using Wimc.Domain.Models;
 using Wimc.Models;
@@ -137,7 +140,24 @@ namespace Wimc.Controllers
             var comparison = await _resourceContainerManager.CompareExistingToRemote(id).ConfigureAwait(false);
             return View(new ResourceComparisonViewModel(comparison));
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> Add(int id, string cloudId)
+        {
+            var resourceDefinition = await _resourceManager.GetResourceDefinition(HttpUtility.UrlDecode(cloudId)).ConfigureAwait(false);
+            var resource = ResourceContainerBuilder.BuildResource(resourceDefinition);
+            resource.ResourceContainerId = id;
+            return View(new NewAzureResourceViewModel(resource));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(NewAzureResourceViewModel newAzureResourceViewModel)
+        {
+            var persistedResource = await _resourceManager
+                .Add(newAzureResourceViewModel.ResourceContainerId, HttpUtility.UrlDecode(newAzureResourceViewModel.CloudId)).ConfigureAwait(false);
+
+            return RedirectToAction("Detail", new {id = newAzureResourceViewModel.ResourceContainerId});
+        }
         
     }
 }

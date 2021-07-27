@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mx.Library.ExceptionHandling;
+using Wimc.Business.Builders;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
 
@@ -81,6 +82,22 @@ namespace Wimc.Business.Managers
             }
 
             await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<Resource> Add(int resourceContainerId, string cloudId)
+        {
+            var resourceDefinition = await _resourceRepository.GetResourceDefinition(cloudId).ConfigureAwait(false);
+            if (resourceDefinition != null)
+            {
+                var resource = ResourceContainerBuilder.BuildResource(resourceDefinition);
+                resource.ResourceContainerId = resourceContainerId;
+                
+                _resourceRepository.Insert(resource);
+                await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
+                return resource;
+            }
+
+            return null;
         }
 
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)

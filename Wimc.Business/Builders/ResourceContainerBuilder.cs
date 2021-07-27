@@ -71,6 +71,12 @@ namespace Wimc.Business.Builders
 
             return resources;
         }
+
+        public static Resource BuildResource(string resourceJson)
+        {
+            return new Resource(resourceJson.DeserializeJson<AzureResource>(), resourceJson);
+        }
+        
         
     }
 }

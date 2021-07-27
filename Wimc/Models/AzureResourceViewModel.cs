@@ -11,12 +11,14 @@ namespace Wimc.Models
         {
             ResourceId = resource.ResourceId;
             Id = resource.CloudId;
+            CloudId = resource.CloudId;
             Name = resource.ResourceName;
             Type = resource.ResourceType;
             Location = resource.ResourceLocation;
             IsMigrated = resource.IsMigrated;
             Definition = resource.ResourceDefinition;
             Notes = resource.Notes;
+            ResourceContainerId = resource.ResourceContainerId;
         }
 
         public AzureResourceViewModel(Resource resource, int resourceContainerId) : this(resource)
@@ -27,6 +29,7 @@ namespace Wimc.Models
         public int ResourceContainerId { get; set; }
         public int ResourceId { get; set;  }
         public string Id { get; set; }
+        public string CloudId { get; set; }
         public string Location { get; set; }
 
         public string Name { get; set; }
