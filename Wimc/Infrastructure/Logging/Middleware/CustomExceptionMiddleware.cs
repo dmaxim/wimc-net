@@ -70,13 +70,14 @@ namespace Wimc.Infrastructure.Logging.Middleware
                 var exceptionHandlerFeature = new ExceptionHandlerFeature()
                 {
                     Error = ex,
-                    Path = originalPath.Value,
+                    Path = context.Request.Path,
                 };
 
                 context.Features.Set<IExceptionHandlerFeature>(exceptionHandlerFeature);
                 context.Features.Set<IExceptionHandlerPathFeature>(exceptionHandlerFeature);
-                context.Response.StatusCode = 500;
+                context.Response.StatusCode = 200;
                 context.Response.OnStarting(_clearCacheHeadersDelegate, context.Response);
+                
 
                 await _options.ExceptionHandler(context);
             }
