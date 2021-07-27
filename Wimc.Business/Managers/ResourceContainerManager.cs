@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace Wimc.Business.Managers
             var newContainer = ResourceContainerBuilder.BuildFromApi(name, containerJson);
 
             await AppendChildResources(newContainer).ConfigureAwait(false);
+
             _resourceContainerRepository.Insert(newContainer);
             await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
             return newContainer;
@@ -116,6 +118,25 @@ namespace Wimc.Business.Managers
                     resourceContainer.Resources.AddRange(resources);
                 }
                 
+            }
+
+            var sqlServers = resourceContainer.Resources
+                .Where(resource => resource.ResourceType.Equals(ResourceTypes.SqlServer)).ToList();
+
+            foreach (var sqlServer in sqlServers)
+            {
+                var firewallRules = await _resourceRepository
+                    .GetResourceDefinition($"{sqlServer.CloudId}/firewallRules").ConfigureAwait(false);
+
+                if (!string.IsNullOrWhiteSpace(firewallRules))
+                {
+                    var resources = ResourceContainerBuilder.BuildResources(firewallRules);
+                    foreach (var resource in resources)
+                    {
+                        resource.ResourceLocation = "NA";
+                    }
+                    resourceContainer.Resources.AddRange(resources);
+                }
             }
         }
     }
