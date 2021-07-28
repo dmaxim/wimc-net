@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Wimc.Business.Builders;
 using Wimc.Business.Configuration;
+using Wimc.Domain.Messages.Commands;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
 
@@ -14,11 +15,13 @@ namespace Wimc.Business.Managers
     {
         private readonly IResourceContainerRepository _resourceContainerRepository;
         private readonly IResourceRepository _resourceRepository;
+        private readonly IMessageRepository _messageRepository;
 
-        public ResourceContainerManager(IResourceContainerRepository resourceContainerRepository, IResourceRepository resourceRepository)
+        public ResourceContainerManager(IResourceContainerRepository resourceContainerRepository, IResourceRepository resourceRepository, IMessageRepository messageRepository) 
         {
             _resourceContainerRepository = resourceContainerRepository;
             _resourceRepository = resourceRepository;
+            _messageRepository = messageRepository;
         }
         
         public async Task<IList<ResourceContainer>> GetAll()
@@ -101,6 +104,18 @@ namespace Wimc.Business.Managers
             return new ResourceComparison(existing.Resources.ToList(), remote.Resources.ToList(), containerId, existing.ContainerName);
 
         }
+
+        public async Task AddNewResources(int resourceContainerId)
+        {
+            var resourceComparison = await CompareExistingToRemote(resourceContainerId).ConfigureAwait(false);
+            
+            foreach (var resource in resourceComparison.New)
+            {
+                var addResourceCommand = new AddResource(resource);
+                await _messageRepository.Publish(addResourceCommand).ConfigureAwait(false);
+            }
+        }
+
 
         private async Task AppendChildResources(ResourceContainer resourceContainer)
         {

@@ -24,5 +24,7 @@ namespace Wimc.Business.Managers
 
         Task<IList<ResourceContainer>> GetAllWithResources();
         Task<ResourceComparison> CompareExistingToRemote(int containerId);
+
+        Task AddNewResources(int containerId);
     }
 }

@@ -158,6 +158,14 @@ namespace Wimc.Controllers
 
             return RedirectToAction("Detail", new {id = newAzureResourceViewModel.ResourceContainerId});
         }
+
+        [HttpGet]
+        public async Task<ActionResult> AddNewResources(int id)
+        {
+            await _resourceContainerManager.AddNewResources(id).ConfigureAwait(false);
+            return RedirectToAction("Detail", new {id = id});
+        }
+        
         
     }
 }

@@ -1,6 +1,12 @@
 @model ResourceComparisonViewModel
 
 <div class="card">
+    <div class="card-title">Actions</div>
+    <div class="card-body">
+         <a asp-action="AddNewResources" asp-controller="AzureResources" asp-route-id="@Model.ContainerId" ><span class="material-icons" title="Add New">notes</span></a>
+    </div>
+</div>
+<div class="card">
     <div class="card-title">
         New Resources - @Html.DisplayFor(model => model.ContainerName)
     </div>

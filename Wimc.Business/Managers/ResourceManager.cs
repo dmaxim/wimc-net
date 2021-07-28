@@ -13,7 +13,7 @@ namespace Wimc.Business.Managers
     public class ResourceManager : IResourceManager
     {
         private readonly IResourceRepository _resourceRepository;
-
+        
         public ResourceManager(IResourceRepository resourceRepository)
         {
             _resourceRepository = resourceRepository;
@@ -100,6 +100,7 @@ namespace Wimc.Business.Managers
             return null;
         }
 
+        
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)
         {
             var contentPath = $"{templatePath}/templates/{resourceType}.tf";

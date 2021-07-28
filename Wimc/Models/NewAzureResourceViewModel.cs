@@ -8,5 +8,6 @@ namespace Wimc.Models
         public NewAzureResourceViewModel(Resource resource) :base(resource){}
         
         public  NewAzureResourceViewModel(Resource resource, int resourceContainerId) : base(resource, resourceContainerId) {} 
+
     }
 }

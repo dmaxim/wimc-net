@@ -58,6 +58,8 @@ namespace Wimc.Infrastructure.DI
             services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
             services.AddTransient<IResourceManager, ResourceManager>();
             services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
+            services.AddTransient<IMessageClient, MessageClient>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
 
             return services;
         }
