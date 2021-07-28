@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Mx.Library.ExceptionHandling;
 using Mx.Library.Serialization;
+using Rebus.Bus;
 using Wimc.Domain.Clients;
 
 namespace Wimc.Data.Clients
@@ -12,12 +13,16 @@ namespace Wimc.Data.Clients
     public class MessageClient : IMessageClient
     {
         private readonly string _messageBusConnectionString;
-        public MessageClient(string connectionString)
+        private readonly IBus _messageBus;
+        public MessageClient(string connectionString, IBus messageBus)
         {
             _messageBusConnectionString = connectionString;
+            _messageBus = messageBus;
         }
         public async Task Publish<TMessageType>(IList<TMessageType> messages, string topicName)
         {
+            await PublishViaRebus(messages, topicName).ConfigureAwait(false);
+            /*
             var client = new ServiceBusClient(_messageBusConnectionString);
             var sender = client.CreateSender(topicName);
             using var messageBatch = await sender.CreateMessageBatchAsync();
@@ -46,10 +51,19 @@ namespace Wimc.Data.Clients
             {
                 throw new MxApplicationStateException("No messages to publish");
             }
+            */
             
 
         }
 
+        private async Task PublishViaRebus<TMessageType>(IList<TMessageType> messages, string topicName)
+        {
+            foreach (var message in messages)
+            {
+                await _messageBus.Publish(message).ConfigureAwait(false);
+            }
+        }
+        
         public async Task Receive(string topicName, string subscriptionName)
         {
             var client = new ServiceBusClient(_messageBusConnectionString);

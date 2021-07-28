@@ -14,11 +14,12 @@ namespace Wimc.Handler
         {
             collection.Configure<MessageBusConfiguration>(config.GetSection("MessageBus"));
             
+            /*
             collection.AddTransient<IMessageClient, MessageClient>(provider =>
             {
                 var configuration = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
                 return new MessageClient(configuration.ConnectionString);
-            });
+            });*/
 
             return collection;
 

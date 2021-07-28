@@ -111,6 +111,7 @@ namespace Wimc.Business.Managers
             var addResourceCommands = new List<AddResource>();
             foreach (var resource in resourceComparison.New)
             {
+                resource.ResourceContainerId = resourceContainerId;
                 addResourceCommands.Add(new AddResource(resource));
                 
             }

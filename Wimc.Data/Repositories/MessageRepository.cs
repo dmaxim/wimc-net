@@ -16,7 +16,7 @@ namespace Wimc.Data.Repositories
         
         public async Task Publish<TMessageType>(IList<TMessageType> messages)
         {
-            await _messageClient.Publish(messages, "addresource").ConfigureAwait(false);
+            await _messageClient.Publish(messages, "addresource-topic").ConfigureAwait(false);
         }
     }
 }
