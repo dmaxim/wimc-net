@@ -1,13 +1,22 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Wimc.Domain.Clients;
 using Wimc.Domain.Repositories;
 
 namespace Wimc.Data.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
-        public Task Publish<TMessageType>(TMessageType message)
+        private readonly IMessageClient _messageClient;
+        
+        public MessageRepository(IMessageClient messageClient)
         {
-            return Task.FromResult(0);
+            _messageClient = messageClient;
+        }
+        
+        public async Task Publish<TMessageType>(IList<TMessageType> messages)
+        {
+            await _messageClient.Publish(messages, "addresource").ConfigureAwait(false);
         }
     }
 }

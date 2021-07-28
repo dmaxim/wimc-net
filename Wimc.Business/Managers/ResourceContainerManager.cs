@@ -108,12 +108,13 @@ namespace Wimc.Business.Managers
         public async Task AddNewResources(int resourceContainerId)
         {
             var resourceComparison = await CompareExistingToRemote(resourceContainerId).ConfigureAwait(false);
-            
+            var addResourceCommands = new List<AddResource>();
             foreach (var resource in resourceComparison.New)
             {
-                var addResourceCommand = new AddResource(resource);
-                await _messageRepository.Publish(addResourceCommand).ConfigureAwait(false);
+                addResourceCommands.Add(new AddResource(resource));
+                
             }
+            await _messageRepository.Publish(addResourceCommands).ConfigureAwait(false);
         }
 
 

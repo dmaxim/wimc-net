@@ -24,6 +24,8 @@ namespace Wimc.Infrastructure.DI
                 .PostConfigure<WimcUIConfiguration>(options => options.ThrowIfInvalid());
 
             services.Configure<ArmApiClientConfig>(config.GetSection("ArmApiClientConfig"));
+
+            services.Configure<MessageBusConfiguration>(config.GetSection("MessageBus"));
             
             services.AddScoped<IEntityContext>(provider =>
             {
@@ -58,7 +60,11 @@ namespace Wimc.Infrastructure.DI
             services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
             services.AddTransient<IResourceManager, ResourceManager>();
             services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
-            services.AddTransient<IMessageClient, MessageClient>();
+            services.AddTransient<IMessageClient, MessageClient>(provider =>
+            {
+                var configuration = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
+                return new MessageClient(configuration.ConnectionString);
+            });
             services.AddTransient<IMessageRepository, MessageRepository>();
 
             return services;

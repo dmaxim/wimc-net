@@ -6,8 +6,12 @@ namespace Wimc.Domain.Messages.Commands
     {
         public AddResource(Resource newResource)
         {
-            NewResource = newResource;
+            CloudId = newResource.CloudId;
+            Name = newResource.ResourceName;
         }
-        public Resource NewResource {get; set; }   
+        
+        public string CloudId { get; set; }
+        public string Name { get; set; }
+       
     }
 }
