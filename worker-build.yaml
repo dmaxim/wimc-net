@@ -1,0 +1,88 @@
+
+trigger:
+ branches:
+   include:
+   - features/worker
+ paths:
+   exclude:
+     - Deploy
+
+pool:
+  name: DevOpsLocal
+
+variables:
+  imageName: 'mxinfo.azurecr.io/wimc-worker'
+  tag: '$(build.buildId)'
+  lowMediumResults: 'trivy-report-low-med.xml'
+  highCritResults: 'trivy-report-high-crit.xml'
+
+steps:
+
+- script: docker build -f WorkerDockerfile -t $(imageName):$(tag) .
+  displayName: 'docker build'
+
+- task: CmdLine@2
+  displayName: "Run Trivy Scan"
+  inputs:
+    script: |
+      trivy image --exit-code 0 --severity LOW,MEDIUM --format template --template "@/home/devops/junit.tpl" -o $(lowMediumResults) $(imageName):$(tag)
+      trivy image --exit-code 0 --severity HIGH,CRITICAL --format template --template "@/home/devops/junit.tpl" -o $(highCritResults) $(imageName):$(tag)
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/$(lowMediumResults)'
+    mergeTestResults: true
+    failTaskOnFailedTests: false
+    testRunTitle: 'Trivy - Low Medium Vulnerabilities'
+  condition: 'always()'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/$(highCritResults)'
+    mergeTestResults: true
+    failTaskOnFailedTests: false
+    testRunTitle: 'Trivy - High Critical Vulnerabilities'
+  condition: 'always()'
+
+- task: CmdLine@2
+  displayName: "Lint Docker File"
+  inputs:
+    script:  |
+        docker run --rm --volume $PWD:/work:ro --workdir /work hadolint/hadolint:v2.5.0 hadolint Dockerfile > hadolint-results.txt
+    workingDirectory: $(build.sourcesDirectory)
+
+- task: dependency-check-build-task@6
+  displayName: "OWASP Dependency Check"
+  inputs:
+    projectName: 'wimc-worker'
+    scanPath: '**/*.csproj'
+    format: 'HTML, JUNIT'
+    localInstallPath: "/home/devops/storage/dependency-check"
+    failOnCVSS: '3'
+
+- task: PublishTestResults@2
+  displayName: "Publish Dependency Check Results"
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '$(common.testResultsDirectory)/dependency-check/dependency-check-junit.xml'
+    mergeTestResults: false
+    failTaskOnFailedTests: true
+    testRunTitle: 'OWASP Dep Check'
+  condition: 'always()'
+
+- task: Docker@2
+  displayName: "Push Docker Image"
+  inputs:
+    containerRegistry: 'mxinfo-containers'
+    repository: 'wimc-worker'
+    command: 'push'
+    container: $(imageName):$(tag)
+    
+- task: Docker@2
+  displayName: "Remove Docker Image"
+  inputs: 
+    command: 'rmi'
+    arguments: $(imageName):$(tag)  
+  
