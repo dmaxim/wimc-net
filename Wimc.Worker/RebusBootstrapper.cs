@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Rebus.ServiceProvider;
 using Wimc.Domain.Messages.Commands;
 
@@ -16,9 +17,10 @@ namespace Wimc.Worker
 
         public bool Start()
         {
-            _serviceProvider.UseRebus(bus =>
+            _serviceProvider.UseRebus(async (bus) => 
             {
-                bus.Subscribe<AddResource>().ConfigureAwait(false).GetAwaiter().GetResult();
+                //bus.Subscribe<AddResource>().ConfigureAwait(false).GetAwaiter().GetResult();
+                await bus.Subscribe<AddResource>().ConfigureAwait(false);
             });
             return true;
         }

@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <UserSecretsId>dotnet-WImc.Worker-FC1CB6E1-1780-46AD-826C-510C3C1D32D9</UserSecretsId>
+        <AssemblyName>Wimc.Worker</AssemblyName>
+        <RootNamespace>Wimc.Worker</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

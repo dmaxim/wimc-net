@@ -23,7 +23,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Handler", "Wimc.Handle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.HandlerService", "Wimc.HandlerService\Wimc.HandlerService.csproj", "{DD37BD0A-C2F6-4F13-89D4-DF61B40D9D3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WImc.Worker", "WImc.Worker\WImc.Worker.csproj", "{664E4F9F-75CE-4F7A-8DCC-68565CC80DDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Worker", "Wimc.Worker\Wimc.Worker.csproj", "{664E4F9F-75CE-4F7A-8DCC-68565CC80DDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Tests.Unit", "Wimc.Tests.Unit\Wimc.Tests.Unit.csproj", "{5465E852-81AE-4D31-9301-75B96D53DA4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{05EEA033-8BC3-4787-9A8D-5C1035FB153D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{F47F160F-3DDE-4796-B677-00ADA894B16F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,11 +81,21 @@ Global
 		{664E4F9F-75CE-4F7A-8DCC-68565CC80DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{664E4F9F-75CE-4F7A-8DCC-68565CC80DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{664E4F9F-75CE-4F7A-8DCC-68565CC80DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD5A0C62-A613-45A7-9324-0C5F12173FED}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{236BF547-7146-41B4-A85F-C5F916D1E5C7} = {F47F160F-3DDE-4796-B677-00ADA894B16F}
+		{B29D4EC8-5802-4D07-AC6D-024029523125} = {F47F160F-3DDE-4796-B677-00ADA894B16F}
+		{6C576C0C-C375-43EE-8044-F3E3CB1E99BA} = {F47F160F-3DDE-4796-B677-00ADA894B16F}
+		{5465E852-81AE-4D31-9301-75B96D53DA4D} = {05EEA033-8BC3-4787-9A8D-5C1035FB153D}
 	EndGlobalSection
 EndGlobal

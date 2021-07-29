@@ -32,11 +32,11 @@ namespace Wimc.Domain.Models
 
         private IList<Resource> GetNew(IList<Resource> existing, IList<Resource> remote)
         {
-            return remote
-                .Where(remoteResource => !existing.Any(existingResource =>
-                    remoteResource.ResourceType == existingResource.ResourceType &&
-                    remoteResource.CloudId == existingResource.CloudId))
-                .ToList();
+             return remote
+                 .Where(remoteResource => !existing.Any(existingResource =>
+                     remoteResource.ResourceType == existingResource.ResourceType &&
+                     remoteResource.CloudId == existingResource.CloudId))
+                 .ToList();
 
         }
         
