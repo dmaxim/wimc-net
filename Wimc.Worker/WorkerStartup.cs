@@ -1,5 +1,5 @@
 using System;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -18,20 +18,19 @@ using Wimc.Domain.Repositories;
 using Wimc.Infrastructure.Configuration;
 using Wimc.Infrastructure.Handlers;
 
-namespace Wimc.Infrastructure.DI
+namespace WImc.Worker
 {
-    public static class Dependencies
+    public static class WorkerStartup
     {
-        public static IServiceCollection AddAppDependencies(this IServiceCollection services, IConfiguration config)
+            public static IServiceCollection AddWorkerDependencies(this IServiceCollection collection, IConfiguration config)
         {
-            services.Configure<WimcUIConfiguration>(config.GetSection("WimcConfig"))
-                .PostConfigure<WimcUIConfiguration>(options => options.ThrowIfInvalid());
-
-            services.Configure<ArmApiClientConfig>(config.GetSection("ArmApiClientConfig"));
-
-            services.Configure<MessageBusConfiguration>(config.GetSection("MessageBus"));
+            collection.Configure<MessageBusConfiguration>(config.GetSection("MessageBus"));
+            collection.Configure<ArmApiClientConfig>(config.GetSection("ArmApiClientConfig"));
             
-            services.AddScoped<IEntityContext>(provider =>
+            collection.Configure<WimcUIConfiguration>(config.GetSection("WimcConfig"))
+                .PostConfigure<WimcUIConfiguration>(options => options.ThrowIfInvalid());
+            
+            collection.AddScoped<IEntityContext>(provider =>
             {
                 var appConfig = provider.GetService<IOptions<WimcUIConfiguration>>()?.Value;
                 if (appConfig != null)
@@ -43,8 +42,10 @@ namespace Wimc.Infrastructure.DI
                     throw new MxApplicationStateException("Unable to read the database connection string");
                 }
             });
+            
 
-            services.AddHttpClient<IApiClient, ArmApiClient>()
+
+            collection.AddHttpClient<IApiClient, ArmApiClient>()
                 .ConfigureHttpClient((provider, client) =>
                 {
                     var configuration = provider.GetRequiredService<IOptions<ArmApiClientConfig>>().Value;
@@ -59,27 +60,30 @@ namespace Wimc.Infrastructure.DI
                 
                 
             
-            services.AddTransient<IResourceContainerRepository, ResourceContainerRepository>();
-            services.AddTransient<IResourceRepository, ResourceRepository>();
-            services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
-            services.AddTransient<IResourceManager, ResourceManager>();
-            services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
-            services.AddRebus((configurer, provider) =>
-            {
-                var busConfig = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
-                return configurer
-                    .Transport(t => t.UseAzureServiceBusAsOneWayClient(busConfig.ConnectionString));
-
-            });
-            services.AddTransient<IMessageClient, MessageClient>(provider =>
+            collection.AddTransient<IResourceContainerRepository, ResourceContainerRepository>();
+            collection.AddTransient<IResourceRepository, ResourceRepository>();
+            collection.AddTransient<IResourceContainerManager, ResourceContainerManager>();
+            collection.AddTransient<IResourceManager, ResourceManager>();
+            collection.AddTransient<IMessageRepository, MessageRepository>();
+            collection.AddTransient<IMessageClient, MessageClient>(provider =>
             {
                 var configuration = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
                 var bus = provider.GetRequiredService<IBus>();
                 return new MessageClient(configuration.ConnectionString, bus);
             });
-            services.AddTransient<IMessageRepository, MessageRepository>();
 
-            return services;
+
+            collection.AutoRegisterHandlersFromAssembly(Assembly.GetExecutingAssembly().FullName);
+
+            collection.AddRebus((configurer, provider) =>
+            {
+                var busConfig = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
+                return configurer
+                    .Transport(t => t.UseAzureServiceBus(busConfig.ConnectionString, busConfig.QueueName));
+
+            });
+            return collection;
+
         }
     }
 }

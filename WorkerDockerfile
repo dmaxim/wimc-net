@@ -1,0 +1,30 @@
+FROM mcr.microsoft.com/dotnet/runtime:5.0.8-focal-amd64 AS base
+WORKDIR /app
+
+FROM  mcr.microsoft.com/dotnet/sdk:5.0 AS build 
+WORKDIR /src
+COPY Mx.EntityFramework/Mx.EntityFramework.csproj Mx.EntityFramework/
+COPY Mx.EntityFramework.Contracts/Mx.EntityFramework.Contracts.csproj Mx.EntityFramework.Contracts/
+COPY Mx.Library/Mx.Library.csproj Mx.Library/
+COPY Wimc.Business/Wimc.Business.csproj Wimc.Business/
+COPY Wimc.Data/Wimc.Data.csproj Wimc.Data/
+COPY Wimc.Domain/Wimc.Domain.csproj Wimc.Domain/
+COPY Wimc.Infrastructure/Wimc.Infrastructure.csproj Wimc.Infrastructure/
+COPY Wimc.Worker/Wimc.Worker.csproj Wimc.Worker/
+
+
+RUN dotnet restore Wimc.Worker/Wimc.Worker.csproj
+COPY . .
+WORKDIR /src/Wimc.Worker
+
+RUN dotnet build Wimc.Worker.csproj -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish Wimc.Worker.csproj -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Wimc.Worker.dll"]
+
+
