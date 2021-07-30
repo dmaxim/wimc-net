@@ -30,12 +30,6 @@ namespace WImc.Worker
             collection.Configure<WimcUIConfiguration>(config.GetSection("WimcConfig"))
                 .PostConfigure<WimcUIConfiguration>(options => options.ThrowIfInvalid());
             
-            /*collection.AddTransient<IMessageClient, MessageClient>(provider =>
-            {
-                var configuration = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
-                return new MessageClient(configuration.ConnectionString);
-            });*/
-            
             collection.AddScoped<IEntityContext>(provider =>
             {
                 var appConfig = provider.GetService<IOptions<WimcUIConfiguration>>()?.Value;
@@ -54,12 +48,12 @@ namespace WImc.Worker
             collection.AddHttpClient<IApiClient, ArmApiClient>()
                 .ConfigureHttpClient((provider, client) =>
                 {
-                    var configuration = provider.GetService<IOptions<ArmApiClientConfig>>().Value;
+                    var configuration = provider.GetRequiredService<IOptions<ArmApiClientConfig>>().Value;
                     client.BaseAddress = new Uri(configuration.BaseUri);
                 })
                 .AddHttpMessageHandler(provider =>
                 {
-                    var configuration = provider.GetService<IOptions<ArmApiClientConfig>>().Value;
+                    var configuration = provider.GetRequiredService<IOptions<ArmApiClientConfig>>().Value;
                     return new AzureAdTokenHandler(configuration);
                 })
                 .SetHandlerLifetime(TimeSpan.FromHours(1));
@@ -73,7 +67,7 @@ namespace WImc.Worker
             collection.AddTransient<IMessageRepository, MessageRepository>();
             collection.AddTransient<IMessageClient, MessageClient>(provider =>
             {
-                var configuration = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
+                var configuration = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
                 var bus = provider.GetRequiredService<IBus>();
                 return new MessageClient(configuration.ConnectionString, bus);
             });
@@ -83,7 +77,7 @@ namespace WImc.Worker
 
             collection.AddRebus((configurer, provider) =>
             {
-                var busConfig = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
+                var busConfig = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
                 return configurer
                     .Transport(t => t.UseAzureServiceBus(busConfig.ConnectionString, busConfig.QueueName));
 

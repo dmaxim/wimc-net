@@ -47,12 +47,12 @@ namespace Wimc.Infrastructure.DI
             services.AddHttpClient<IApiClient, ArmApiClient>()
                 .ConfigureHttpClient((provider, client) =>
                 {
-                    var configuration = provider.GetService<IOptions<ArmApiClientConfig>>().Value;
+                    var configuration = provider.GetRequiredService<IOptions<ArmApiClientConfig>>().Value;
                     client.BaseAddress = new Uri(configuration.BaseUri);
                 })
                 .AddHttpMessageHandler(provider =>
                 {
-                    var configuration = provider.GetService<IOptions<ArmApiClientConfig>>().Value;
+                    var configuration = provider.GetRequiredService<IOptions<ArmApiClientConfig>>().Value;
                     return new AzureAdTokenHandler(configuration);
                 })
                 .SetHandlerLifetime(TimeSpan.FromHours(1));
@@ -66,14 +66,14 @@ namespace Wimc.Infrastructure.DI
             services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
             services.AddRebus((configurer, provider) =>
             {
-                var busConfig = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
+                var busConfig = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
                 return configurer
                     .Transport(t => t.UseAzureServiceBusAsOneWayClient(busConfig.ConnectionString));
 
             });
             services.AddTransient<IMessageClient, MessageClient>(provider =>
             {
-                var configuration = provider.GetService<IOptions<MessageBusConfiguration>>().Value;
+                var configuration = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
                 var bus = provider.GetRequiredService<IBus>();
                 return new MessageClient(configuration.ConnectionString, bus);
             });
