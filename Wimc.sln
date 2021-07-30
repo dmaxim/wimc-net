@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{05EEA033
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{F47F160F-3DDE-4796-B677-00ADA894B16F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wimc.Eventing", "Wimc.Eventing\Wimc.Eventing.csproj", "{810FBEB3-B10A-4235-BA9D-2D5C5144F968}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5465E852-81AE-4D31-9301-75B96D53DA4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{810FBEB3-B10A-4235-BA9D-2D5C5144F968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{810FBEB3-B10A-4235-BA9D-2D5C5144F968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{810FBEB3-B10A-4235-BA9D-2D5C5144F968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{810FBEB3-B10A-4235-BA9D-2D5C5144F968}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
