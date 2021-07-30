@@ -8,4 +8,8 @@
       <ProjectReference Include="..\Wimc.Domain\Wimc.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Azure.Messaging.EventGrid" Version="4.5.0" />
+    </ItemGroup>
+
 </Project>

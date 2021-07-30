@@ -2,18 +2,17 @@ using Wimc.Domain.Models;
 
 namespace Wimc.Domain.Messages.Events
 {
-    public class ResourceDeleted
+    public class ResourceDeleted : WimcEvent
     {
         public ResourceDeleted() {}
-        public ResourceDeleted(Resource newResource)
+        public ResourceDeleted(Resource deletedResource) : base(deletedResource)
         {
-            CloudId = newResource.CloudId;
-            Name = newResource.ResourceName;
-            ResourceContainerId = newResource.ResourceContainerId;
+            
         }
-        
-        public int ResourceContainerId { get; set; }
-        public string CloudId { get; set; }
-        public string Name { get; set; }
+
+
+        public override string Topic => "resourcedeleted";
+        public override string Subject => "NewResource";
+
     }
 }

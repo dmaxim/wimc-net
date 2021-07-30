@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -29,7 +30,8 @@ namespace Wimc.Data.Clients
 
         public async Task<string> GetResourceContainerDefinition(string resourceContainerName)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Get, $"subscriptions/{_apiConfiguration.SubscriptionId}/resourcegroups/{resourceContainerName}/resources?{_apiConfiguration.ApiVersion}");
+            using var request = new HttpRequestMessage(HttpMethod.Get,
+                $"subscriptions/{_apiConfiguration.SubscriptionId}/resourcegroups/{resourceContainerName}/resources?{_apiConfiguration.ApiVersion}");
 
             using var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
 
@@ -44,8 +46,6 @@ namespace Wimc.Data.Clients
             }
 
             return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-
         }
 
         public async Task<string> ExecuteQuery(string uri, string apiVersion)
