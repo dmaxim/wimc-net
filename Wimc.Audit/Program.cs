@@ -39,10 +39,5 @@ namespace Wimc.Audit
 
         }
 
-
-        private void Example()
-        {
-
-        }
     }
 }
