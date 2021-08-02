@@ -26,17 +26,12 @@ namespace Wimc.Audit
 
             var collection = new ServiceCollection();
             collection.AddOptions().AddHandlerServiceDependencies(configuration);
-
-
             ServiceProvider = collection.BuildServiceProvider();
         }
         static void Main(string[] args)
         {
-            // Get an instance of the AuditManager
             var auditManager = ServiceProvider.GetRequiredService<IAuditManager>();
-            
             auditManager.Generate().ConfigureAwait(false).GetAwaiter().GetResult();
-
         }
 
     }

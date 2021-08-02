@@ -6,6 +6,6 @@ namespace Wimc.Business.Managers
 {
     public interface IAuditResultManager
     {
-        Task<IList<Resource>> GetNewResources();
+        Task<IList<ResourceContainer>> GetNewResources();
     }
 }

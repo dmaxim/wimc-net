@@ -6,11 +6,11 @@ namespace Wimc.Models.Audit
 {
     public class AuditIndexViewModel
     {
-        public AuditIndexViewModel(IList<Resource> newResources)
+        public AuditIndexViewModel(IList<ResourceContainer> resourceContainers)
         {
-            NewResources = newResources.Select(resource => new AuditNewResourceViewModel(resource)).ToList();
+            Containers = resourceContainers.Select(container => new AuditContainerViewModel(container)).ToList();
         }
         
-        public IList<AuditNewResourceViewModel> NewResources { get; }
+        public IList<AuditContainerViewModel> Containers { get; }
     }
 }

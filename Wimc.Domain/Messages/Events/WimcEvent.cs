@@ -9,12 +9,12 @@ namespace Wimc.Domain.Messages.Events
         {
             ResourceContainerId = resource.ResourceContainerId;
             CloudId = resource.CloudId;
-            Name = resource.ResourceName;
+            ResourceName = resource.ResourceName;
         }
         
         public int ResourceContainerId { get; set; }
         public string CloudId { get; set; }
-        public string Name { get; set; }
+        public string ResourceName { get; set; }
 
         public abstract string Topic
         {
