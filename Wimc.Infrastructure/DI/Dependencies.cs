@@ -30,6 +30,8 @@ namespace Wimc.Infrastructure.DI
             services.Configure<ArmApiClientConfig>(config.GetSection("ArmApiClientConfig"));
 
             services.Configure<MessageBusConfiguration>(config.GetSection("MessageBus"));
+
+            services.Configure<AzureTableConfiguration>(config.GetSection("AzureTable"));
             
             services.AddScoped<IEntityContext>(provider =>
             {
@@ -58,12 +60,6 @@ namespace Wimc.Infrastructure.DI
                 .SetHandlerLifetime(TimeSpan.FromHours(1));
                 
                 
-            
-            services.AddTransient<IResourceContainerRepository, ResourceContainerRepository>();
-            services.AddTransient<IResourceRepository, ResourceRepository>();
-            services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
-            services.AddTransient<IResourceManager, ResourceManager>();
-            services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
             services.AddRebus((configurer, provider) =>
             {
                 var busConfig = provider.GetRequiredService<IOptions<MessageBusConfiguration>>().Value;
@@ -77,6 +73,19 @@ namespace Wimc.Infrastructure.DI
                 var bus = provider.GetRequiredService<IBus>();
                 return new MessageClient(configuration.ConnectionString, bus);
             });
+
+            services.AddTransient<IAuditRepository, AuditRepository>(provider =>
+            {
+                var configuration = provider.GetRequiredService<IOptions<AzureTableConfiguration>>().Value;
+                return new AuditRepository(configuration);
+            });
+                        
+            services.AddTransient<IResourceContainerRepository, ResourceContainerRepository>();
+            services.AddTransient<IResourceRepository, ResourceRepository>();
+            services.AddTransient<IResourceContainerManager, ResourceContainerManager>();
+            services.AddTransient<IResourceManager, ResourceManager>();
+            services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
+            services.AddTransient<IAuditResultManager, AuditResultManager>();
             services.AddTransient<IMessageRepository, MessageRepository>();
 
             return services;

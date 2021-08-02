@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Azure.Data.Tables" Version="12.1.0" />
       <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.2.1" />
       <PackageReference Include="Rebus.AzureServiceBus" Version="8.1.5" />
       <PackageReference Include="Rebus.ServiceProvider" Version="6.4.1" />
