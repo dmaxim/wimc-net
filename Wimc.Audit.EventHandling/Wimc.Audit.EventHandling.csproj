@@ -4,6 +4,7 @@
         <AzureFunctionsVersion>V3</AzureFunctionsVersion>
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="Azure.Data.Tables" Version="12.1.0" />
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.1.0" />
         <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
