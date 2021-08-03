@@ -1,6 +1,7 @@
 
 applicationEnvironment: "wimc-dev"
 applicationName: "wimc"
+hostName: "seti-wimc.danmaxim.net"
 
 # Deployment
 replicaCount: 3
