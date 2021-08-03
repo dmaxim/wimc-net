@@ -4,10 +4,10 @@ metadata:
   name: {{.Release.Name}}
   namespace:  {{.Release.Namespace}}
 spec:
-selector:
-  app: {{.Values.applicationName}}
-type: ClusterIP
-ports:
-- port: 80
-  protocol: TCP
-  targetPort: 80
+  selector:
+    app: {{.Values.applicationName}}
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
