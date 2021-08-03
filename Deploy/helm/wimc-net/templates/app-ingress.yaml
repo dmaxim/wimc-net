@@ -2,12 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    #cert-manager.io/acme-http01-edit-in-place: "true"
-    #cert-manager.io/cluster-issuer: letsencrypt-prod
-    #cert-manager.io/issue-temporary-certificate: "true"
+    cert-manager.io/acme-http01-edit-in-place: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/issue-temporary-certificate: "true"
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
-  name: {{.Release.Name}}-proxy
+    kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$request_uri
+    nginx.ingress.kubernetes.io/auth-uri: https://$host/oauth2/auth
+  name: {{.Release.Name}}
+  namespace:  {{.Release.Namespace}}
 spec:
   rules:
   - host: {{.Values.hostName}}
@@ -15,17 +19,10 @@ spec:
       paths:
       - backend:
           service: 
-            name: {{.Values.applicationName}}-proxy
+            name: {{.Values.applicationName}}
             port: 
-              number: 4180
-        path: /oauth2
-        pathType: Prefix
-      - backend:
-          service:
-            name: {{.Values.applicationName}}-proxy
-            port:
-              number: 4180
-        path: /oauth2/callback
+              number: 80
+        path: /
         pathType: Prefix
   tls:
   - hosts:
