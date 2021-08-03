@@ -19,7 +19,7 @@ spec:
       paths:
       - backend:
           service: 
-            name: {{.Values.applicationName}}
+            name: {{.Release.Name}}
             port: 
               number: 80
         path: /
