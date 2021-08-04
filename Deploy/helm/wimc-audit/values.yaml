@@ -1,10 +1,9 @@
 
 applicationEnvironment: "wimc-dev"
 applicationName: "wimc-audit"
-schedule: " * * * *"
+schedule: "0 * * * *"
 
 # Deployment
-replicaCount: 3
 
 appImage: 
   repository: mxinfo.azurecr.io/wimc.audit
