@@ -27,4 +27,4 @@ spec:
   tls:
   - hosts:
     - {{.Values.hostName}}
-    secretName: {{.Values.applicationName}}-secret
+    secretName: {{.Release.Name}}-secret
