@@ -1,0 +1,43 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"kubernetes.io/ingress.class":"nginx","kubernetes.io/tls-acme":"true"},"labels":{"app.kubernetes.io/instance":"wimc-net"},"name":"wimc-net-proxy","namespace":"dev"},"spec":{"rules":[{"host":"seti-wimc.danmaxim.net","http":{"paths":[{"backend":{"service":{"name":"wimc-proxy","port":{"number":4180}}},"path":"/oauth2","pathType":"Prefix"},{"backend":{"service":{"name":"wimc-proxy","port":{"number":4180}}},"path":"/oauth2/callback","pathType":"Prefix"}]}}],"tls":[{"hosts":["seti-wimc.danmaxim.net"],"secretName":"wimc-secret"}]}}
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  creationTimestamp: "2021-08-03T19:00:13Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: wimc-net
+  name: wimc-net-proxy
+  namespace: dev
+  resourceVersion: "31867"
+  uid: 05bc80d4-8d1e-4c5c-b436-484e0aa900e6
+spec:
+  rules:
+  - host: seti-wimc.danmaxim.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: wimc-proxy
+            port:
+              number: 4180
+        path: /oauth2
+        pathType: Prefix
+      - backend:
+          service:
+            name: wimc-proxy
+            port:
+              number: 4180
+        path: /oauth2/callback
+        pathType: Prefix
+  tls:
+  - hosts:
+    - seti-wimc.danmaxim.net
+    secretName: wimc-secret
+status:
+  loadBalancer:
+    ingress:
+    - ip: 52.224.202.144
