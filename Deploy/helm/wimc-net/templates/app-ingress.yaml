@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
     kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/auth-signin: https://$host/oauth2/start?rd=$request_uri
-    nginx.ingress.kubernetes.io/auth-uri: https://$host/oauth2/auth
+    nginx.ingress.kubernetes.io/auth-url: https://$host/oauth2/auth
   name: {{.Release.Name}}
   namespace:  {{.Release.Namespace}}
 spec:
