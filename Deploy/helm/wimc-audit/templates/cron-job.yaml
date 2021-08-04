@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{.Release.Name}}
+  namespace: {{.Release.Namespace}}
+spec:
+  schedule: {{.Values.schedule}}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{.Values.applicationName}}
+            image: {{.Values.appImage.repository}}:{{.Values.appImage.tag}}
+            imagePullPolicy:  {{.Values.appImage.pullPolicy}}
+            volumeMounts:
+            - mountPath: /app/appsettings.secrets.json
+              name: secrets-config
+              subPath: appsettings.secrets.json
+          restartPolicy: Never
+          volumes:
+          - name: secrets-config
+            secret:
+              defaultMode: 420
+              secretName: wimc-audit
+          serviceAccountName: wimc-audit
+          imagePullSecrets:
+          - name: mxinfo-acr-dv
+  #backoffLimit: 1
