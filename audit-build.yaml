@@ -2,7 +2,7 @@
 trigger:
  branches:
    include:
-   - features/audit
+   - main
  paths:
    exclude:
      - Deploy
