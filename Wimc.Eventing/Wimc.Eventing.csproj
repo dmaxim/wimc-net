@@ -5,9 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Mx.Library\Mx.Library.csproj" />
       <ProjectReference Include="..\Wimc.Domain\Wimc.Domain.csproj" />
-      <ProjectReference Include="..\Wimc.Eventing\Wimc.Eventing.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Azure.Messaging.EventGrid" Version="4.5.0" />
     </ItemGroup>
 
 </Project>

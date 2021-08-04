@@ -19,9 +19,9 @@ namespace Wimc.Data.Clients
             _messageBusConnectionString = connectionString;
             _messageBus = messageBus;
         }
-        public async Task Publish<TMessageType>(IList<TMessageType> messages, string topicName)
+        public async Task Publish<TMessageType>(IList<TMessageType> messages)
         {
-            await PublishViaRebus(messages, topicName).ConfigureAwait(false);
+            await PublishViaRebus(messages).ConfigureAwait(false);
             /*
             var client = new ServiceBusClient(_messageBusConnectionString);
             var sender = client.CreateSender(topicName);
@@ -56,7 +56,7 @@ namespace Wimc.Data.Clients
 
         }
 
-        private async Task PublishViaRebus<TMessageType>(IList<TMessageType> messages, string topicName)
+        private async Task PublishViaRebus<TMessageType>(IList<TMessageType> messages)
         {
             foreach (var message in messages)
             {

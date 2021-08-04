@@ -8,7 +8,7 @@ namespace Wimc.Domain.Models
         public ResourceComparison(IList<Resource> existing, IList<Resource> remote, int containerId, string containerName)
         {
             Deleted = GetDeleted(existing, remote);
-            New = GetNew(existing, remote);
+            New = GetNew(existing, remote, containerId);
             ResourceContainerId = containerId;
             ContainerName = containerName;
         }
@@ -30,12 +30,22 @@ namespace Wimc.Domain.Models
             
         }
 
-        private IList<Resource> GetNew(IList<Resource> existing, IList<Resource> remote)
+        private IList<Resource> GetNew(IList<Resource> existing, IList<Resource> remote, int containerId)
         {
              return remote
                  .Where(remoteResource => !existing.Any(existingResource =>
                      remoteResource.ResourceType == existingResource.ResourceType &&
                      remoteResource.CloudId == existingResource.CloudId))
+                 .Select(resource => new Resource
+                 {
+                     ResourceDefinition = resource.ResourceDefinition,
+                     ResourceId = resource.ResourceId,
+                     ResourceLocation = resource.ResourceLocation,
+                     ResourceName = resource.ResourceName,
+                     CloudId = resource.CloudId,
+                     ResourceType = resource.ResourceType,
+                     ResourceContainerId = containerId
+                 })
                  .ToList();
 
         }

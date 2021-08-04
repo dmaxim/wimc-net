@@ -100,8 +100,9 @@ namespace Wimc.Business.Managers
             var remoteDefinition = await GetDefinition(existing.ContainerName).ConfigureAwait(false);
             var remote = ResourceContainerBuilder.BuildFromApi(existing.ContainerName, remoteDefinition);
             await AppendChildResources(remote).ConfigureAwait(false);
-            
-            return new ResourceComparison(existing.Resources.ToList(), remote.Resources.ToList(), containerId, existing.ContainerName);
+
+            return new ResourceComparison(existing.Resources.ToList(), remote.Resources.ToList(), containerId,
+                existing.ContainerName);
 
         }
 

@@ -5,7 +5,7 @@ namespace Wimc.Domain.Clients
 {
     public interface IMessageClient
     {
-        Task Publish<TMessageType>(IList<TMessageType> message, string topicName);
+        Task Publish<TMessageType>(IList<TMessageType> message);
 
         Task Receive(string topicName, string subscriptionName);
     }

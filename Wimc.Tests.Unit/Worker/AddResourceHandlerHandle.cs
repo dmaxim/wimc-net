@@ -17,6 +17,13 @@ namespace Wimc.Tests.Unit.Worker
             mockBus.Setup(bus => bus.Send(It.IsAny<AddResource>(), new Dictionary<string, string>()))
                 .ThrowsAsync(new Exception("Test Exception"));
         }
+
+        [Fact]
+        public void WhatThe()
+        {
+            
+            
+        }
         
     }
 }

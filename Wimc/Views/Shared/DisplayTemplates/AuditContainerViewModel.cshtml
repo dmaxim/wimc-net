@@ -1,0 +1,21 @@
+@model Wimc.Models.Audit.AuditContainerViewModel
+
+<div class="card">
+    <div class="card-title">
+        <a asp-action="Compare" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId">@Html.DisplayFor(model => model.Name)</a>
+    </div>
+    <div class="card-body">
+        <div class="table">
+            <table class="table-striped">
+                <thead>
+                <tr>
+                    <th>Resource Name</th>
+                </tr>
+                </thead>
+                <tbody>
+                @Html.DisplayFor(model => model.Resources)
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
