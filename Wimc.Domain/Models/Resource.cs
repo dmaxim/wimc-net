@@ -12,7 +12,7 @@ namespace Wimc.Domain.Models
             ResourceType = azureResource.Type;
             CloudId = azureResource.Id;
             ResourceDefinition = azureResource.ToJson();
-            ResourceLocation = azureResource.Location;
+            ResourceLocation = !string.IsNullOrWhiteSpace(azureResource.Location) ? azureResource.Location : "NA";
             IsMigrated = false;
             Notes = azureResource.Notes;
         }
