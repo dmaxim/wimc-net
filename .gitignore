@@ -357,3 +357,6 @@ appsettings.secrets.json
 
 ## Terraform
 **/.terraform/*
+
+# VSCode
+.vscode/
