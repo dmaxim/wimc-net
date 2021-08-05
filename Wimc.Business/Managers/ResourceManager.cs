@@ -91,7 +91,6 @@ namespace Wimc.Business.Managers
             {
                 var resource = ResourceContainerBuilder.BuildResource(resourceDefinition);
                 resource.ResourceContainerId = resourceContainerId;
-                
                 _resourceRepository.Insert(resource);
                 await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
                 return resource;
