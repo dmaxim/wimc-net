@@ -28,10 +28,10 @@ namespace Wimc.Audit.EventHandling
 
         private static async Task ProcessResourceAddedEvent(ResourceAddedCloudEvent cloudEvent)
         {
-            var accountName = System.Environment.GetEnvironmentVariable("accountName");
-            var accountKey = System.Environment.GetEnvironmentVariable("accountKey");
-            var endpointUrl = System.Environment.GetEnvironmentVariable("endpointUrl");
-            var tableName = System.Environment.GetEnvironmentVariable("tableName");
+            var accountName = System.Environment.GetEnvironmentVariable("AccountName");
+            var accountKey = System.Environment.GetEnvironmentVariable("AccountKey");
+            var endpointUrl = System.Environment.GetEnvironmentVariable("EndpointUrl");
+            var tableName = System.Environment.GetEnvironmentVariable("TableName");
 
             if (string.IsNullOrWhiteSpace(endpointUrl))
             {
