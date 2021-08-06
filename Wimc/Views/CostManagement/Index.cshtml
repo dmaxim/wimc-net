@@ -1,0 +1,15 @@
+@using Microsoft.AspNetCore.HttpOverrides
+@model Wimc.Domain.Models.CostManagement.TimeFrameCost
+
+<div class="card">
+    <div class="card-title">Cost Management for @Html.DisplayFor(model => model.ContainerName)</div>
+    <div class="card-body">
+        <div>
+            <div>From: @Html.DisplayFor(model => model.FromDate)</div>
+            <div>To: @Html.DisplayFor(model => model.ToDate)</div>
+        </div>
+        <div>
+            <div>Cost: @Html.DisplayFor(model => model.Cost)</div>
+        </div>
+    </div>
+</div>

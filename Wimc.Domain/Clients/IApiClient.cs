@@ -1,5 +1,7 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Wimc.Domain.Models.CostManagement;
 
 namespace Wimc.Domain.Clients
 {
@@ -12,5 +14,6 @@ namespace Wimc.Domain.Clients
 
         Task<string> ExecuteQuery(string uri, string apiVersion);
 
+        Task<QueryResult> GetResourceContainerBilling(BillingQuery query);
     }
 }

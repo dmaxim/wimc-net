@@ -1,26 +1,47 @@
+using System;
+using System.Threading.Tasks;
+using Wimc.Domain.Clients;
+using Wimc.Domain.Models.CostManagement;
+using Wimc.Domain.Repositories;
+
 namespace Wimc.Data.Repositories
 {
-    public class BillingRepository
+    public class BillingRepository : IBillingRepository
     {
-        private const string ExampleUrl =
-            "https://management.azure.com/subscriptions/bb0c99b7-d44d-413a-b294-564466712637/resourcegroups/MC_rg-mxinfo-kube-prod_mxinfo-kube-prod_eastus2/providers/Microsoft.CostManagement/query?api-version=2019-11-01";
+        private readonly IApiClient _apiClient;
+        public BillingRepository(IApiClient apiClient)
+        {
+            _apiClient = apiClient;
+        }
         
+       public async Task<TimeFrameCost> GetResourceGroupCost(string resourceGroupName, DateTime fromDate, DateTime toDate)
+       {
+           var query = new BillingQuery(resourceGroupName, new UsageQuery(fromDate, toDate));
+
+            var queryResult = await _apiClient.GetResourceContainerBilling(query).ConfigureAwait(false);
+
+            var billingAmount = new BillingAmount(queryResult);
+            return new TimeFrameCost(fromDate, toDate, resourceGroupName, billingAmount.Total); 
+              
+       }
+       
+               
        // {
-         //   "type": "Usage",
-           // "timeframe": "Custom",
-            //"timePeriod" : {
-              //  "from" : "07/01/2021",
-               // "to" : "08/01/2021"
-            //},
-            //"dataset" : {
-              //  "granularity" : "None",
-               // "aggregation" : {
-                 //   "totalCost" : {
-                   //     "name" : "PreTaxCost",
-                   //     "function" : "Sum"
-                   // }
-               // }
-           // }
+       //   "type": "Usage",
+       // "timeframe": "Custom",
+       //"timePeriod" : {
+       //  "from" : "07/01/2021",
+       // "to" : "08/01/2021"
+       //},
+       //"dataset" : {
+       //  "granularity" : "None",
+       // "aggregation" : {
+       //   "totalCost" : {
+       //     "name" : "PreTaxCost",
+       //     "function" : "Sum"
+       // }
+       // }
+       // }
        // }
     }
 }

@@ -8,6 +8,7 @@
         <a asp-action="Edit" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId"><span class="material-icons" title="Edit">edit</span> </a>
         <a asp-action="ContainerTemplate" asp-controller="Templates" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Generate">autorenew</span></a>
         <a asp-action="Compare" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Compare">compare</span></a>
+        <a asp-action="Index" asp-controller="CostManagement" asp-route-id="@Model.ResourceContainerId"><span class="material-icons" title="Cost">attach_money</span> </a>
         <a asp-action="Delete" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId"><span class="material-icons text-danger" title="Delete">delete</span></a>
     </td>
 </tr>

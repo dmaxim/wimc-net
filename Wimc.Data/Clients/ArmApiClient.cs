@@ -1,18 +1,21 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Mx.Library.ExceptionHandling;
+using Mx.Library.Serialization;
 using Wimc.Domain.AppConfiguration;
 using Wimc.Domain.Clients;
+using Wimc.Domain.Models.CostManagement;
 
 namespace Wimc.Data.Clients
 {
     public class ArmApiClient : IApiClient
     {
         private readonly ArmApiClientConfig _apiConfiguration;
+        private const string BillingQueryTemplate = "subscriptions/{0}/resourcegroups/{1}/providers/Microsoft.CostManagement/query?api-version=2019-11-01";
   
         public ArmApiClient(HttpClient httpClient, IOptions<ArmApiClientConfig> configuration)
         {
@@ -61,6 +64,27 @@ namespace Wimc.Data.Clients
             else
             {
                 return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+        }
+
+        public async Task<QueryResult> GetResourceContainerBilling(BillingQuery query)
+        {
+            var queryUrl = string.Format(BillingQueryTemplate, _apiConfiguration.SubscriptionId, query.ContainerName);
+            var content = new StringContent(query.Query.ToJson(), Encoding.UTF8, "application/json");
+            var myQuery = query.ToJson();
+
+            using var response = await HttpClient.PostAsync(
+                new Uri($"{HttpClient.BaseAddress}/{queryUrl}"),
+                content);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return responseContent.DeserializeJson<QueryResult>();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                return null;
             }
         }
 
