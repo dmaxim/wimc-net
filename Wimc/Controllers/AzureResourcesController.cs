@@ -8,6 +8,7 @@ using Wimc.Business.Builders;
 using Wimc.Business.Managers;
 using Wimc.Domain.Models;
 using Wimc.Models;
+using Wimc.Models.Resources;
 
 namespace Wimc.Controllers
 {
@@ -188,6 +189,19 @@ namespace Wimc.Controllers
             return RedirectToAction("Detail", new {id = id});
         }
         
-        
+        [HttpGet]
+        public IActionResult DeleteResource(int id, int containerId)
+        {
+            return View(new DeleteResourceViewModel {ResourceId = id, ResourceContainerId = containerId});
+        }
+
+        [HttpPost]
+        public async  Task<IActionResult> ConfirmResourceDelete(DeleteResourceViewModel model)
+        {
+            await _resourceManager.Delete(model.ResourceId).ConfigureAwait(false);
+
+            return RedirectToAction("Detail", new {id = model.ResourceContainerId});
+        }
+
     }
 }

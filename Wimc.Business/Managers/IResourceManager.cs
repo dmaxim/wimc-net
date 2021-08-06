@@ -23,7 +23,10 @@ namespace Wimc.Business.Managers
         Task UnMigrate(string resourceType);
 
         Task<Resource> Add(int resourceContainerId, string cloudId);
-    
+
+        Task Delete(int resourceId);
+
+        Task<Resource> GetById(int resourceId);
 
     }
 }
