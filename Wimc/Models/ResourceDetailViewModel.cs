@@ -12,11 +12,16 @@ namespace Wimc.Models
             Name = name;
             Json = json;
             Resources = resources.Select(resource => new AzureResourceViewModel(resource, containerId)).ToList();
+            UnMigratedResources = resources.Where(
+                    resource => !resource.IsMigrated)
+                .Select(resource => new UnMigratedResourceViewModel(resource, containerId)).ToList();
         }
         public string Name { get; set; }
 
         public string Json { get; set; }
         public IList<AzureResourceViewModel> Resources { get; set; }
+        
+        public IList<UnMigratedResourceViewModel> UnMigratedResources { get; }
         
 
     }

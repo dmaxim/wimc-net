@@ -5,6 +5,7 @@
     <td>@Html.DisplayFor(model => model.ContainerName)</td>
     <td>
         <a asp-action="Detail" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Detail">description</span> </a>
+        <a asp-action="UnMigrated" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Detail">assignment</span> </a>
         <a asp-action="Edit" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId"><span class="material-icons" title="Edit">edit</span> </a>
         <a asp-action="ContainerTemplate" asp-controller="Templates" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Generate">autorenew</span></a>
         <a asp-action="Compare" asp-controller="AzureResources" asp-route-id="@Model.ResourceContainerId" ><span class="material-icons" title="Compare">compare</span></a>
