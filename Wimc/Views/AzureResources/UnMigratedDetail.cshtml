@@ -1,0 +1,35 @@
+@model ResourceDetailViewModel
+
+<h3>Detail Here</h3>
+<div class="card">
+    <div class="card-header">Resources for resource group @Html.DisplayFor(model => model.Name)</div>
+    <div class="card-body">
+        <div class="table">
+            <table class="table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Migrated</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @Html.DisplayFor(model => model.UnMigratedResources)
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">Raw</div>
+    <div class="card-body">
+        <pre>
+            @Html.DisplayFor(model=>model.Json)
+        </pre>
+    </div>
+</div>

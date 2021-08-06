@@ -87,6 +87,8 @@ namespace Wimc.Infrastructure.DI
             services.AddTransient<IResourceQueryManager, ResourceQueryManager>();
             services.AddTransient<IAuditResultManager, AuditResultManager>();
             services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IBillingRepository, BillingRepository>();
+            services.AddTransient<ICostManagementManager, CostManagementManager>();
 
             return services;
         }

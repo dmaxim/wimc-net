@@ -51,6 +51,13 @@ namespace Wimc.Controllers
             return View("Detail",
                 new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.RawJson,resourceContainer.ResourceContainerId, resourceContainer.Resources));
         }
+
+        public async Task<IActionResult> UnMigrated(int id)
+        {
+            var resourceContainer = await _resourceContainerManager.GetById(id);
+            return View("UnmigratedDetail",
+                new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.RawJson,resourceContainer.ResourceContainerId, resourceContainer.Resources));
+        }
         
         private async Task<string> ReadResourceJson(IFormFile formFile)
         {
@@ -75,6 +82,21 @@ namespace Wimc.Controllers
             return RedirectToAction("Detail", new {id =  model.ResourceContainerId});
         }
 
+        [HttpGet]
+        public async Task<IActionResult> MigrateNew(int id, int containerId)
+        {
+            var resource = await _resourceManager.Get(id).ConfigureAwait(false);
+
+            return View(new UnMigratedResourceViewModel(resource, containerId));
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> MigrateNew(UnMigratedResourceViewModel model)
+        {
+            await _resourceManager.Migrate(model.ResourceId);
+            return RedirectToAction("UnMigrated", new {id =  model.ResourceContainerId});
+        }
+        
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
