@@ -11,10 +11,14 @@ namespace Wimc.Models
         {
             Name = name;
             Json = json;
-            Resources = resources.Select(resource => new AzureResourceViewModel(resource, containerId)).ToList();
+            Resources = resources.Select(resource => new AzureResourceViewModel(resource, containerId))
+                .OrderBy(resource => resource.Name)
+                .ToList();
             UnMigratedResources = resources.Where(
                     resource => !resource.IsMigrated)
-                .Select(resource => new UnMigratedResourceViewModel(resource, containerId)).ToList();
+                .Select(resource => new UnMigratedResourceViewModel(resource, containerId))
+                .OrderBy(resource => resource.Name)
+                .ToList();
         }
         public string Name { get; set; }
 
