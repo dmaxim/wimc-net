@@ -42,7 +42,7 @@ steps:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/$(highCritResults)'
     mergeTestResults: true
-    failTaskOnFailedTests: false
+    failTaskOnFailedTests: true
     testRunTitle: 'Trivy - High Critical Vulnerabilities'
   condition: 'always()'
 
