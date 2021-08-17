@@ -52,7 +52,6 @@ namespace Wimc.Audit.EventHandling
             if (!EntityExists(cloudEvent, tableClient))
             {
                 await AddEvent(cloudEvent, tableClient).ConfigureAwait(false);
-
             }
         }
 
