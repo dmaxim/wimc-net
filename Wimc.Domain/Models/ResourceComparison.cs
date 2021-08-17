@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,8 +25,8 @@ namespace Wimc.Domain.Models
         {
             return existing
                 .Where(existingResource => !remote.Any(remoteResource =>
-                existingResource.ResourceType == remoteResource.ResourceType &&
-                existingResource.CloudId == remoteResource.CloudId))
+                existingResource.ResourceType.Equals(remoteResource.ResourceType, StringComparison.InvariantCultureIgnoreCase) &&
+                existingResource.CloudId.Equals(remoteResource.CloudId, StringComparison.InvariantCultureIgnoreCase)))
                 .ToList();
             
         }
@@ -34,8 +35,8 @@ namespace Wimc.Domain.Models
         {
              return remote
                  .Where(remoteResource => !existing.Any(existingResource =>
-                     remoteResource.ResourceType == existingResource.ResourceType &&
-                     remoteResource.CloudId == existingResource.CloudId))
+                     remoteResource.ResourceType.Equals( existingResource.ResourceType, StringComparison.InvariantCultureIgnoreCase) &&
+                     remoteResource.CloudId.Equals(existingResource.CloudId, StringComparison.InvariantCultureIgnoreCase)))
                  .Select(resource => new Resource
                  {
                      ResourceDefinition = resource.ResourceDefinition,

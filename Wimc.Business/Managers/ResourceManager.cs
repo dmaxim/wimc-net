@@ -99,7 +99,20 @@ namespace Wimc.Business.Managers
             return null;
         }
 
-        
+        public async Task Delete(int resourceId)
+        {
+            var existingResource = await _resourceRepository.Get(resourceId).ConfigureAwait(false);
+            
+            _resourceRepository.Delete(existingResource);
+            await _resourceRepository.SaveChangesAsync().ConfigureAwait(false);
+
+        }
+
+        public async Task<Resource> GetById(int resourceId)
+        {
+            return await _resourceRepository.Get(resourceId).ConfigureAwait(false);
+        }
+
         private async Task<string> GetTemplateContent(string resourceType, string templatePath)
         {
             var contentPath = $"{templatePath}/templates/{resourceType}.tf";

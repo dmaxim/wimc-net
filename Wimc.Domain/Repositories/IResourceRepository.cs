@@ -12,5 +12,7 @@ namespace Wimc.Domain.Repositories
         Task<string> GetResourceDefinition(string resourceId);
 
         Task<string> GetResource(string url, string apiVersion);
+
+        Task<Resource> Get(int resourceId);
     }
 }
