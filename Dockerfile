@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0.8-focal-amd64 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0.9-focal-amd64 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
