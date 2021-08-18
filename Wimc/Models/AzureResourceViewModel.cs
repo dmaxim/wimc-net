@@ -1,5 +1,4 @@
 ﻿
-using System.Collections.Generic;
 using Wimc.Domain.Models;
 
 namespace Wimc.Models

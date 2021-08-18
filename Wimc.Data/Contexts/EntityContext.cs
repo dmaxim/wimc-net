@@ -45,7 +45,7 @@ namespace Wimc.Data.Contexts
             MapEntitiesToTable(modelBuilder);
         }
 
-        private void MapEntitiesToTable(ModelBuilder modelBuilder)
+        private static void MapEntitiesToTable(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ResourceContainer>()
                 .ToTable("ResourceContainer", DefaultSchema)

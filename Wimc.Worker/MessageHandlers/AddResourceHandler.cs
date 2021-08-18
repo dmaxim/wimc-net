@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Rebus.Extensions;
 using Rebus.Handlers;
 using Rebus.Pipeline;
 using Wimc.Business.Managers;
@@ -27,18 +25,7 @@ namespace WImc.Worker.MessageHandlers
         public async Task Handle(AddResource message)
         {
             _logger.LogInformation("Handling message");
-            //var cancellationToken = _messageContext.GetCancellationToken(); TODO:  Update Add Method to accept a cancellation token
-            //try
-            //{
-                await _resourceManager.Add(message.ResourceContainerId, message.CloudId).ConfigureAwait(false);
-            //}
-            //catch (Exception e)
-            //{
-                // Depending on the exception type could shutdown the handler so it gets recycled
-                //_hostApplicationLifetime.StopApplication();
-              //  throw;
-           // }
-            
+            await _resourceManager.Add(message.ResourceContainerId, message.CloudId).ConfigureAwait(false);
             _logger.LogInformation("Message Handled");
         }
     }

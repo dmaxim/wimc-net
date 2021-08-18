@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Wimc.Domain.Models.CostManagement
 {
@@ -21,7 +20,7 @@ namespace Wimc.Domain.Models.CostManagement
         public string Total { get; }
 
 
-        public string ParseAmount(IList<IList<string>> rowValues)
+        private static string ParseAmount(IList<IList<string>> rowValues)
         {
             return string.Join(' ', rowValues[0]);
         }

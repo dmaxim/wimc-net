@@ -21,7 +21,7 @@ namespace Wimc.Domain.Models
         public int ResourceContainerId { get; }
         
         public string ContainerName { get;  }
-        private IList<Resource> GetDeleted(IList<Resource> existing, IList<Resource> remote)
+        private static IList<Resource> GetDeleted(IList<Resource> existing, IList<Resource> remote)
         {
             return existing
                 .Where(existingResource => !remote.Any(remoteResource =>
@@ -31,7 +31,7 @@ namespace Wimc.Domain.Models
             
         }
 
-        private IList<Resource> GetNew(IList<Resource> existing, IList<Resource> remote, int containerId)
+        private static IList<Resource> GetNew(IList<Resource> existing, IList<Resource> remote, int containerId)
         {
              return remote
                  .Where(remoteResource => !existing.Any(existingResource =>

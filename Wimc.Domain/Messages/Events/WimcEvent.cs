@@ -4,8 +4,9 @@ namespace Wimc.Domain.Messages.Events
 {
     public abstract class WimcEvent
     {
-        public WimcEvent() {}
-        public WimcEvent(Resource resource)
+        protected WimcEvent() {}
+
+        protected WimcEvent(Resource resource)
         {
             ResourceContainerId = resource.ResourceContainerId;
             CloudId = resource.CloudId;

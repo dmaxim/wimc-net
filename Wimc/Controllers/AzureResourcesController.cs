@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Http;
@@ -60,7 +59,7 @@ namespace Wimc.Controllers
                 new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.RawJson,resourceContainer.ResourceContainerId, resourceContainer.Resources));
         }
         
-        private async Task<string> ReadResourceJson(IFormFile formFile)
+        private static async Task<string> ReadResourceJson(IFormFile formFile)
         {
             using var reader = new StreamReader(formFile.OpenReadStream());
             var contents = await reader.ReadToEndAsync().ConfigureAwait(false);
@@ -176,7 +175,7 @@ namespace Wimc.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(NewAzureResourceViewModel newAzureResourceViewModel)
         {
-            var persistedResource = await _resourceManager
+            _ = await _resourceManager
                 .Add(newAzureResourceViewModel.ResourceContainerId, HttpUtility.UrlDecode(newAzureResourceViewModel.CloudId)).ConfigureAwait(false);
 
             return RedirectToAction("Detail", new {id = newAzureResourceViewModel.ResourceContainerId});

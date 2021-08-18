@@ -2,17 +2,12 @@ using System;
 using Azure.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Serilog;
 using Wimc.Infrastructure;
 using Wimc.Infrastructure.DI;
 using Wimc.Infrastructure.Logging.Middleware;
@@ -32,21 +27,8 @@ namespace Wimc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           /*
-              ConfigureAuthentication(services);
-            
-              services.AddAuthorization(config =>
-              {
-                  var authenticationPolicy = new AuthorizationPolicyBuilder()
-                      .RequireAuthenticatedUser()
-                      .Build();
-  
-                  config.DefaultPolicy = authenticationPolicy;
-              });
-              */
             services.AddControllersWithViews();
             services.AddAppDependencies(Configuration);
-            //AddDataProtection(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,15 +41,6 @@ namespace Wimc
 
             app.UseRouting();
 
-            /*
-            app.UseAuthentication();
-            app.UseAuthorization();
-            app.UseCookiePolicy(new CookiePolicyOptions{ 
-                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax, 
-                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.None,
-                Secure = Microsoft.AspNetCore.Http.CookieSecurePolicy.None
-            });
-            */
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

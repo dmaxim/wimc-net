@@ -8,12 +8,8 @@ namespace Mx.EntityFramework.Repositories
 {
 	public abstract class Repository<TEntity> : RepositoryReadOnly<TEntity>, IRepository<TEntity> where TEntity : class
 	{
-		private readonly IEntityContext _entityContext;
-
-		protected Repository(IEntityContext entityContext) : base(entityContext)
-		{
-			_entityContext = entityContext;
-		}
+		
+		protected Repository(IEntityContext entityContext) : base(entityContext){}
 
 		public virtual void Insert(TEntity entity)
 		{

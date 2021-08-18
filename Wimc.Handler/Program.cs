@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
-using Wimc.Data.Clients;
 using Wimc.Domain.Clients;
 
 namespace Wimc.Handler
@@ -35,12 +34,7 @@ namespace Wimc.Handler
         
         static async Task Main(string[] args)
         {
-            var messageClient = ServiceProvider.GetService<IMessageClient>();
-            
-           // var messageClient =
-             //   new MessageClient(
-               //     "Endpoint=sb://asb-mxinfo-messaging-dev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=UlyaxTj0smGKxznkWaON8OmKLSn72HfHGrSePHRo70I=");
-
+            var messageClient = ServiceProvider.GetRequiredService<IMessageClient>();
             await messageClient.Receive("addresource", "addresource").ConfigureAwait(false);
             
             

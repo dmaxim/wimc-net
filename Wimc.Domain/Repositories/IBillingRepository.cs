@@ -6,6 +6,6 @@ namespace Wimc.Domain.Repositories
 {
     public interface IBillingRepository
     {
-        Task<TimeFrameCost> GetResourceGroupCost(string resourceGroupName, DateTime from, DateTime to);
+        Task<TimeFrameCost> GetResourceGroupCost(string resourceGroupName, DateTime fromDate, DateTime toDate);
     }
 }

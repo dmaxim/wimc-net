@@ -6,7 +6,7 @@ namespace Wimc.Domain.Repositories
 {
     public interface IResourceContainerRepository : IRepository<ResourceContainer>
     {
-        Task<ResourceContainer> Get(int resourceId);
+        Task<ResourceContainer> Get(int resourceContainerId);
 
         Task<string> GetDefinition(string resourceContainerName);
     }

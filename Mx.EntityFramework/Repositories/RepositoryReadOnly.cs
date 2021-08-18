@@ -21,10 +21,7 @@ namespace Mx.EntityFramework.Repositories
 
 
 
-		protected DbContext Context
-		{
-			get { return _entityContext.Context; }
-		}
+		protected DbContext Context => _entityContext.Context;
 
 		public virtual IQueryable<TEntity> GetAll()
 		{
@@ -55,7 +52,7 @@ namespace Mx.EntityFramework.Repositories
             return entities.FirstOrDefault();
         }
 
-        private void AssertSingle(IList<TEntity> entities)
+        private static void AssertSingle(IList<TEntity> entities)
         {
             if (entities.Count > 1)
             {
