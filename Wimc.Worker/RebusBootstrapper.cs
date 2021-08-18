@@ -19,7 +19,6 @@ namespace Wimc.Worker
         {
             _serviceProvider.UseRebus(async (bus) => 
             {
-                //bus.Subscribe<AddResource>().ConfigureAwait(false).GetAwaiter().GetResult();
                 await bus.Subscribe<AddResource>().ConfigureAwait(false);
             });
             return true;

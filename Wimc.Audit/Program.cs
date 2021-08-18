@@ -15,9 +15,6 @@ namespace Wimc.Audit
         {
             var applicationEnvironment = PlatformServices.Default.Application;
 
-            //setup configuration
-            var environment = Environment.GetEnvironmentVariable("RuntimeEnvironment") ?? "";
-
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(applicationEnvironment.ApplicationBasePath)
                 .AddJsonFile("appsettings.json")

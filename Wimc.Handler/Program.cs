@@ -7,16 +7,13 @@ using Wimc.Domain.Clients;
 
 namespace Wimc.Handler
 {
-    class Program
+    static class Program
     {
         private static readonly IServiceProvider ServiceProvider;
         
         static Program()
         {
             var applicationEnvironment = PlatformServices.Default.Application;
-
-            //setup configuration
-            var environment = Environment.GetEnvironmentVariable("RuntimeEnvironment") ?? "";
 
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(applicationEnvironment.ApplicationBasePath)

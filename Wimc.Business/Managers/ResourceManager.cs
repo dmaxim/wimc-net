@@ -113,7 +113,7 @@ namespace Wimc.Business.Managers
             return await _resourceRepository.Get(resourceId).ConfigureAwait(false);
         }
 
-        private async Task<string> GetTemplateContent(string resourceType, string templatePath)
+        private static async Task<string> GetTemplateContent(string resourceType, string templatePath)
         {
             var contentPath = $"{templatePath}/templates/{resourceType}.tf";
             if (!File.Exists(contentPath))

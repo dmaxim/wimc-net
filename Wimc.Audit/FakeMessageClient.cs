@@ -6,7 +6,7 @@ namespace Wimc.Audit
 {
     public class FakeMessageClient : IMessageClient
     {
-        public Task Publish<TMessageType>(IList<TMessageType> message)
+        public Task Publish<TMessageType>(IList<TMessageType> messages)
         {
             throw new System.NotImplementedException();
         }

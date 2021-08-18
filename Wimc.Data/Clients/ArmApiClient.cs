@@ -71,8 +71,6 @@ namespace Wimc.Data.Clients
         {
             var queryUrl = string.Format(BillingQueryTemplate, _apiConfiguration.SubscriptionId, query.ContainerName);
             var content = new StringContent(query.Query.ToJson(), Encoding.UTF8, "application/json");
-            var myQuery = query.ToJson();
-
             using var response = await HttpClient.PostAsync(
                 new Uri($"{HttpClient.BaseAddress}/{queryUrl}"),
                 content);
@@ -83,7 +81,6 @@ namespace Wimc.Data.Clients
             }
             else
             {
-                var errorContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 return null;
             }
         }
