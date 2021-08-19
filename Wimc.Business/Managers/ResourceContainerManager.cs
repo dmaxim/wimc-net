@@ -37,14 +37,6 @@ namespace Wimc.Business.Managers
                 .ConfigureAwait(false);
         }
 
-        public async Task<ResourceContainer> Create(string name, string containerJson)
-        {
-            var newContainer = ResourceContainerBuilder.BuildFromUpload(name, containerJson);
-            _resourceContainerRepository.Insert(newContainer);
-            await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
-            return newContainer;
-        }
-
         public async Task<ResourceContainer> CreateFromDefinition(string name, string containerJson)
         {
             var newContainer = ResourceContainerBuilder.BuildFromApi(name, containerJson);

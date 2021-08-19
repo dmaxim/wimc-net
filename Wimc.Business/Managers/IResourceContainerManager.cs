@@ -10,8 +10,6 @@ namespace Wimc.Business.Managers
 
         Task<ResourceContainer> Get(int resourceContainerId);
 
-        Task<ResourceContainer> Create(string name, string containerJson);
-
         Task<ResourceContainer> CreateFromDefinition(string name, string containerJson);
 
         Task<ResourceContainer> GetById(int resourceContainerId);

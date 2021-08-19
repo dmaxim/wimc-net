@@ -29,21 +29,6 @@ namespace Wimc.Controllers
             return View(new ResourceContainerIndexModel(resources));
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
-        public async Task<IActionResult> UploadJson(NewResourceViewModel newResourceViewModel)
-        {
-            var fileContents = await ReadResourceJson(newResourceViewModel.ResourceFile).ConfigureAwait(false);
-
-            var newResourceContainer = await _resourceContainerManager.Create(newResourceViewModel.Name, fileContents);
-            
-            var model = new ResourceDetailViewModel(newResourceViewModel.Name, fileContents, newResourceContainer.ResourceContainerId, newResourceContainer.Resources);
-            
-            return View("Detail", model);
-        }
-
         public async Task<IActionResult> Detail(int id)
         {
             var resourceContainer = await _resourceContainerManager.GetById(id);
@@ -58,14 +43,7 @@ namespace Wimc.Controllers
             return View("UnmigratedDetail",
                 new ResourceDetailViewModel(resourceContainer.ContainerName, resourceContainer.RawJson,resourceContainer.ResourceContainerId, resourceContainer.Resources));
         }
-        
-        private static async Task<string> ReadResourceJson(IFormFile formFile)
-        {
-            using var reader = new StreamReader(formFile.OpenReadStream());
-            var contents = await reader.ReadToEndAsync().ConfigureAwait(false);
-            return contents;
-        }
-
+       
         [HttpGet]
         public async Task<IActionResult> Migrate(int id, int containerId)
         {
