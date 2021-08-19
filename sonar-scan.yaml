@@ -23,7 +23,7 @@ steps:
     displayName: 'Run tests'
     inputs:
       command: test
-      arguments: '**/*.Tests.*.csproj'
+      arguments: 'Wimc.Tests.Unit/Wimc.Tests.Unit.csproj'
 
   - task: CmdLine@2
     displayName: 'Sonar Scan'
