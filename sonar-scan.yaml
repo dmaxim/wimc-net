@@ -19,6 +19,12 @@ variables:
 
 steps:
 
+  - task: DotNetCoreCLI@2
+    displayName: 'Run tests'
+    inputs:
+      command: test
+      arguments: '**/*.Tests.*.csproj'
+
   - task: CmdLine@2
     displayName: 'Sonar Scan'
     inputs:
@@ -31,12 +37,6 @@ steps:
       command: build
       arguments: ' --configuration $(BuildConfiguration)'
       projects: '**/*.csproj'
-
-  - task: DotNetCoreCLI@2
-    displayName: 'Run tests'
-    inputs:
-      command: test
-      arguments: '**/Wimc.Tests.Unit/Wimc.Tests.Unit.csproj'
 
   - task: CmdLine@2
     displayName: 'Collect Sonar Results and Upload'
