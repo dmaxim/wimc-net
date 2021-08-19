@@ -6,7 +6,8 @@ schedules:
   branches:
     include:
     - main
-
+    - features/testing
+    
 pool:
   name: DevOpsLocal
 
