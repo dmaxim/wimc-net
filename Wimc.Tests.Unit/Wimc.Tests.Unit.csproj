@@ -31,8 +31,4 @@
       <ProjectReference Include="..\Wimc\Wimc.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Infrastructure" />
-    </ItemGroup>
-
 </Project>

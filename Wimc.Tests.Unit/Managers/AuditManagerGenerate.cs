@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Moq;
 using Wimc.Business.Managers;
@@ -95,10 +96,11 @@ namespace Wimc.Tests.Unit.Managers
         {
             get
             {
+                var existingResources = ExistingResources;
                 return new List<ResourceContainer>
                 {
-                    new ResourceContainer {ResourceContainerId = 1},
-                    new ResourceContainer {ResourceContainerId =  2}
+                    new ResourceContainer {ResourceContainerId = 1, Resources = existingResources.Where(resource => resource.ResourceContainerId.Equals(1)).ToList()},
+                    new ResourceContainer {ResourceContainerId =  2, Resources = existingResources.Where(resource => resource.ResourceContainerId.Equals(2)).ToList()}
                 };
 
             }
@@ -110,8 +112,9 @@ namespace Wimc.Tests.Unit.Managers
             {
                 return new List<Resource>
                 {
-                    new Resource {ResourceId = 1, CloudId = "resource-one", ResourceName = "resource-one"},
-                    new Resource {ResourceId = 2, CloudId = "resource-two", ResourceName = "resource-two"}
+                    new Resource {ResourceId = 1, CloudId = "resource-one", ResourceName = "resource-one", ResourceContainerId = 1, ResourceType = "type-one"},
+                    new Resource {ResourceId = 2, CloudId = "resource-two", ResourceName = "resource-two", ResourceContainerId = 1, ResourceType = "type-one"},
+                    new Resource {ResourceId = 3, CloudId = "resource-three", ResourceName = "resource-three", ResourceContainerId = 2, ResourceType = "type-one"}
                 };
             }
         }
@@ -122,9 +125,9 @@ namespace Wimc.Tests.Unit.Managers
             {
                 return new List<Resource>
                 {
-                    new Resource {ResourceId = 1, CloudId = "resource-one", ResourceName = "resource-one"},
+                    new Resource {ResourceId = 1, CloudId = "resource-one", ResourceName = "resource-one", ResourceType = "type-one"},
                   //  new Resource {ResourceId = 2, CloudId = "resource-two", ResourceName = "resource-two"} # Deleted
-                  new Resource {ResourceId = 3, CloudId = "resource-new", ResourceName = "resource-new"},
+                  new Resource {ResourceId = 3, CloudId = "resource-new", ResourceName = "resource-new", ResourceType = "type-one"},
                 };
             }
         }
