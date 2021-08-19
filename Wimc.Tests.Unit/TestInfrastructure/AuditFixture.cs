@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Wimc.Domain.Models;
 using Wimc.Domain.Repositories;
-
+// ReSharper disable ClassNeverInstantiated.Global
 namespace Wimc.Tests.Unit.TestInfrastructure
 {
     /// <summary>
@@ -10,11 +11,7 @@ namespace Wimc.Tests.Unit.TestInfrastructure
     /// </summary>
     public class AuditFixture
     {
-        public AuditFixture()
-        {
-            
-        }
-
+   
         /// <summary>
         /// Returns a mock IAuditRepository for use in unit tests
         /// </summary>
