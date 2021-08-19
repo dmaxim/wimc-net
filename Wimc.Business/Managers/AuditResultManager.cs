@@ -18,6 +18,10 @@ namespace Wimc.Business.Managers
             _resourceContainerRepository = resourceContainerRepository;
         }
         
+        /// <summary>
+        /// Retrieve the list of new resources by resource container
+        /// </summary>
+        /// <returns></returns>
         public async Task<IList<ResourceContainer>> GetNewResources()
         {
             var newResources = await _auditRepository.GetNewResources().ConfigureAwait(false);
@@ -25,9 +29,12 @@ namespace Wimc.Business.Managers
             var resourceContainerIds =
                 newResources.Select(resource => resource.ResourceContainerId).Distinct().ToList();
 
-            var resourceContainers = await _resourceContainerRepository.GetAll()
-                .Where(container => resourceContainerIds.Contains(container.ResourceContainerId))
-                .ToListAsync().ConfigureAwait(false);
+            if (!resourceContainerIds.Any())
+            {
+                return new List<ResourceContainer>();
+            }
+            var resourceContainers =
+                await _resourceContainerRepository.GetContainers(resourceContainerIds).ConfigureAwait(false);
 
             foreach (var resourceContainer in resourceContainers)
             {

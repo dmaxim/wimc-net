@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Mx.EntityFramework.Contracts;
@@ -29,6 +31,18 @@ namespace Wimc.Data.Repositories
         public async Task<string> GetDefinition(string resourceContainerName)
         {
             return await _apiClient.GetResourceContainerDefinition(resourceContainerName).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Return the list of resource containers for the resourceContainerIds
+        /// </summary>
+        /// <param name="resourceContainerIds"></param>
+        /// <returns></returns>
+        public async Task<IList<ResourceContainer>> GetContainers(IList<int> resourceContainerIds)
+        {
+            return await GetAll()
+                .Where(container => resourceContainerIds.Contains(container.ResourceContainerId))
+                .ToListAsync().ConfigureAwait(false);
         }
     }
 }

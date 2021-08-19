@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Wimc.Domain.Messages.Events;
@@ -17,7 +16,9 @@ namespace Wimc.Business.Managers
             _resourceContainerManager = resourceContainerManager;
             _eventRepository = eventRepository;
         }
-        
+        /// <summary>
+        /// Generate the audit events for resources that have been added or deleted.  Compares the current state in the cloud the the persisted state.
+        /// </summary>
         public async Task Generate()
         {
             var existingContainers = await _resourceContainerManager.GetAll().ConfigureAwait(false);
@@ -33,7 +34,11 @@ namespace Wimc.Business.Managers
             
             
         }
-
+    
+        /// <summary>
+        /// Publishes the resource added events
+        /// </summary>
+        /// <param name="resourceComparison"></param>
         private async Task PublishResourceAddedEvents(ResourceComparison resourceComparison)
         {
             var resourcesAdded = resourceComparison.New.Select(resource => new ResourceAdded(resource)).ToList();
@@ -44,6 +49,10 @@ namespace Wimc.Business.Managers
             
         }
         
+        /// <summary>
+        /// Publishes the resource deleted events
+        /// </summary>
+        /// <param name="resourceComparison"></param>
         private async Task PublishResourceDeletedEvents(ResourceComparison resourceComparison)
         {
             var resourcesDeleted =
