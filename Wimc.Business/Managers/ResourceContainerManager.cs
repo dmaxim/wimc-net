@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Mx.Library.ExceptionHandling;
 using Wimc.Business.Builders;
 using Wimc.Business.Configuration;
 using Wimc.Domain.Messages.Commands;
@@ -16,7 +17,7 @@ namespace Wimc.Business.Managers
         private readonly IResourceContainerRepository _resourceContainerRepository;
         private readonly IResourceRepository _resourceRepository;
         private readonly IMessageRepository _messageRepository;
-
+        private const string ResourceContainerNotFound = "ResourceContainer with id {0} was not found";
         public ResourceContainerManager(IResourceContainerRepository resourceContainerRepository, IResourceRepository resourceRepository, IMessageRepository messageRepository) 
         {
             _resourceContainerRepository = resourceContainerRepository;
@@ -58,8 +59,12 @@ namespace Wimc.Business.Managers
             var container = await _resourceContainerRepository.Get(editResourceContainer.ResourceContainerId)
                 .ConfigureAwait(false);
 
+            if (container == null)
+            {
+                throw new MxNotFoundException(string.Format(ResourceContainerNotFound,
+                    editResourceContainer.ResourceContainerId));
+            }
             container.ContainerName = editResourceContainer.ResourceContainerName;
-
             await _resourceContainerRepository.SaveChangesAsync().ConfigureAwait(false);
         }
 
