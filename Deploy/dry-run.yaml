@@ -1,0 +1,75 @@
+# Source: wimc-net/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: wimc-net
+  namespace: dev
+  labels:
+    environment: wimc-dev
+    app: wimc
+---
+# Source: wimc-net/templates/app-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wimc-net
+  namespace: dev
+  labels:
+    environment: wimc-dev
+    app: wimc
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: wimc
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        environment: wimc-dev
+        app: wimc
+        aadpodidbinding: wimc-web
+    spec:
+      serviceAccountName: wimc-net
+      containers:
+      - name: api
+        image: mxinfo.azurecr.io/wimc-net:365
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            memory: 300Mi 
+            cpu: 200m
+          limits:
+            memory: 300Mi
+            cpu: 200m
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+         - name: secrets-config
+           mountPath: /app/appsettings.secrets.json
+           subPath: "appsettings.secrets.json"
+      volumes:
+        - name: secrets-config
+          flexVolume:
+            driver: "azure/kv"
+            options:
+              usepodidentity: "true"
+              keyvaultname: "mx-aks-vaults-config"
+              keyvaultobjectnames: "wimc-app-settings"
+              keyvaultobjecttypes: "secret"
+              keyvaultobjectaliases: "appsettings.secrets.json"
+              keyvaultobjectversions: ""
+              resourcegroup: "rg-aks-vaults"
+              subscriptionid: "bb0c99b7-d44d-413a-b294-564466712637"
+              tenantid: "38ec304a-0fad-408b-b7cd-e04a2e25b885"
+      imagePullSecrets:
+        - name: mxinfo-acr-dv
+---

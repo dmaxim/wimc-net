@@ -8,7 +8,7 @@ using Xunit;
 namespace Wimc.Tests.Unit.Managers
 {
     /// <summary>
-    /// Unit tests validating the behavior of the AuditResultManager GetNewResources method
+    /// Unit tests validating the behavior of the ResourceContainerManager Edit method
     /// </summary>
     [Collection("Resource Container Fixture Collection")]
     public class ResourceContainerManagerEdit
