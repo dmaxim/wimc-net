@@ -2,7 +2,7 @@
 applicationEnvironment: "wimc-dev"
 applicationName: "wimc"
 hostName: "seti-wimc.danmaxim.net"
-
+dockerSecretName: "setrans-acr-dev"
 # Deployment
 replicaCount: 3
 

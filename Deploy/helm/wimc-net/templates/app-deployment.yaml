@@ -54,4 +54,4 @@ spec:
           secret:
             secretName: wimc-settings
       imagePullSecrets:
-        - name: mxinfo-acr-dv
+        - name: {{.Values.dockerSecretName}}
